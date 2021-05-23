@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Quick Bills</string>
+    <string name="log_in_text">Log-In</string>
+    <string name="sign_up_text">Sign-Up</string>
+    <string name="email_hint" > Email: </string>
+    <string name="email_icn_description">Email Icon</string>
+    <string name="password_hint">Password:</string>
+    <string name="submit_btn">Proceed</string>
 </resources>

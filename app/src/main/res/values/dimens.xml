@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_radius">12sp</dimen>
+    <dimen name="layout_login_radius">16.0sp</dimen>
+</resources>

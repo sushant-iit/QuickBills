@@ -2,7 +2,7 @@
 <resources>
     <color name="notification">#000000</color>
     <color name="background">#121212</color>
-    <color name="surface">#1D1D1D</color>
+    <color name="surface">#424242</color>
     <color name="primary">#b986ff</color>
     <color name="secondary">#00dec0</color>
     <color name="foreground">#FFFFFF</color>

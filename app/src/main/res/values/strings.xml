@@ -2,8 +2,16 @@
     <string name="app_name">Quick Bills</string>
     <string name="log_in_text">Log-In</string>
     <string name="sign_up_text">Sign-Up</string>
-    <string name="email_hint" > Email: </string>
+    <string name="email_hint"> Email: </string>
     <string name="email_icn_description">Email Icon</string>
     <string name="password_hint">Password:</string>
     <string name="submit_btn">Proceed</string>
+    <string name="dashboard_title">My Dashboard</string>
+    <string name="new_bill_icn_description">New Bill Icon</string>
+    <string name="new_bill">New Bill</string>
+    <string name="customers_tab">Customers</string>
+    <string name="prices">My Prices</string>
+    <string name="old_bills_text">All Bills</string>
+    <string name="sales_text">My Sales</string>
+    <string name="my_account">My Account</string>
 </resources>

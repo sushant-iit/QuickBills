@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/emailIcn"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="171dp"
         android:contentDescription="@string/email_icn_description"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,9 +42,11 @@
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="291dp"
-        android:layout_height="334dp"
+        android:layout_width="0dp"
+        android:layout_height="335dp"
+        android:layout_marginLeft="10sp"
         android:layout_marginTop="12dp"
+        android:layout_marginRight="10sp"
         android:background="@drawable/rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"
@@ -53,7 +55,7 @@
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
-            android:layout_width="269dp"
+            android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="56dp"
             android:autofillHints="@string/email_hint"
@@ -66,15 +68,15 @@
             android:paddingRight="10sp"
             android:textColor="@color/foreground"
             android:textColorHint="@color/secondary_text"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editTextTextPassword"
-            android:layout_width="269dp"
+            android:layout_width="0dp"
             android:layout_height="51dp"
-            android:layout_marginTop="140dp"
             android:autofillHints="@string/email_hint"
             android:background="@drawable/input_radius"
             android:drawableStart="@mipmap/baseline_vpn_key_white_48"
@@ -85,6 +87,7 @@
             android:paddingRight="10sp"
             android:textColor="@color/foreground"
             android:textColorHint="@color/secondary_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -98,6 +101,7 @@
             android:text="@string/submit_btn"
             android:textColor="@color/background"
             app:cornerRadius="@dimen/btn_radius"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"

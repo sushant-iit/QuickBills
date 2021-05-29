@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Dashboard">
+    tools:context=".activity.Dashboard">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/new_bill_card_id"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5sp"

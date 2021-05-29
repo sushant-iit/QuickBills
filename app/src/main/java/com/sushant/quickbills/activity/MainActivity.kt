@@ -1,8 +1,9 @@
-package com.sushant.quickbills
+package com.sushant.quickbills.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sushant.quickbills.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

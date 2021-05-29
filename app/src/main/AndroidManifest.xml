@@ -9,10 +9,15 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBills">
-        <activity android:name=".Dashboard"
-            android:label="@string/dashboard_title">
-        </activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".activity.CustomerActivity"
+            android:label="Customers"></activity>
+        <activity
+            android:name=".activity.Dashboard"
+            android:label="@string/dashboard_title"></activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="Quick Bills">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

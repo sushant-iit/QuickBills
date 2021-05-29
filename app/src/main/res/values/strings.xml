@@ -14,4 +14,12 @@
     <string name="old_bills_text">All Bills</string>
     <string name="sales_text">My Sales</string>
     <string name="my_account">My Account</string>
+    <string name="new_customer_default_text">New Customer</string>
+    <string name="search_customer_text">Search</string>
+    <string name="add_customer_icon">New Customer Icon</string>
+    <string name="customer_name_textview">Customer Name</string>
+    <string name="customer_mobile_dummy_text">1234567890</string>
+    <string name="customer_address_dummy_text">New Delhi, India</string>
+    <string name="customer_icon_description">Customer Icon</string>
+    <string name="delete_customer_icon_description">Delete Customer Icon</string>
 </resources>

@@ -10,7 +10,7 @@ class Dashboard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        new_bill_card_id.setOnClickListener(){
+        customer_card_id.setOnClickListener(){
             startActivity(Intent(this, CustomerActivity::class.java))
         }
     }

@@ -21,19 +21,12 @@ class CustomerActivity : AppCompatActivity() {
 
         //TODO("Remember to fetch data from the database. Here customerList is populated for testing purposes only")
         val customer1 = Customer(9430591471, "Sanjay Prasad", "Madhubani")
-        var customerList: ArrayList<Customer> =
-            arrayListOf(
-                customer1,
-                customer1,
-                customer1,
-                customer1,
-                customer1,
-                customer1,
-                customer1,
-                customer1
-            )
+        val customerList: ArrayList<Customer> = arrayListOf()
+        for(i in 1..100)
+            customerList.add(customer1)
+
+        //This is to set the recycler view
         customerListAdapter = CustomerListAdapter(customerList!!, this)
-        Log.d("Debug", customerList!!.size.toString())
         customer_list_recycler_view_id.adapter = customerListAdapter
         customer_list_recycler_view_id.layoutManager = layoutManager
         customerListAdapter?.notifyDataSetChanged()
@@ -46,8 +39,4 @@ class CustomerActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    //This function is to set up recycle view
-    private fun setRecycleView(customerList: ArrayList<Customer>) {
-
-    }
 }

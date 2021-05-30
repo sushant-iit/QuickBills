@@ -4,5 +4,5 @@
     <dimen name="layout_login_radius">16.0sp</dimen>
     <dimen name="dashboard_text" >24sp</dimen>
     <dimen name="card_radius">18sp</dimen>
-    <dimen name="standard_text_size">18dp</dimen>
+    <dimen name="standard_text_size">18sp</dimen>
 </resources>

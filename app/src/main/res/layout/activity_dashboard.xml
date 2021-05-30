@@ -42,7 +42,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_receipt_long_white_48" />
+                    app:srcCompat="@drawable/ic_bill_add" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -66,6 +66,7 @@
             app:cardCornerRadius="@dimen/card_radius">
 
             <LinearLayout
+                android:id="@+id/customer_card_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -79,7 +80,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_people_white_48" />
+                    app:srcCompat="@drawable/ic_customer_v2" />
 
                 <TextView
                     android:id="@+id/textView2"
@@ -128,7 +129,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_sell_white_48" />
+                    app:srcCompat="@drawable/ic_sales" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -165,7 +166,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_manage_accounts_white_48" />
+                    app:srcCompat="@drawable/ic_my_account" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -215,7 +216,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_attach_money_white_48" />
+                    app:srcCompat="@drawable/ic_price" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -252,7 +253,7 @@
                     android:paddingLeft="35sp"
                     android:paddingTop="35sp"
                     android:paddingRight="35sp"
-                    app:srcCompat="@mipmap/outline_picture_as_pdf_white_48" />
+                    app:srcCompat="@drawable/ic_all_bills" />
 
                 <TextView
                     android:id="@+id/textView6"

@@ -22,4 +22,8 @@
     <string name="customer_address_dummy_text">New Delhi, India</string>
     <string name="customer_icon_description">Customer Icon</string>
     <string name="delete_customer_icon_description">Delete Customer Icon</string>
+    <string name="add_customer_pop_up_hint">Name</string>
+    <string name="add_customer_mob_pop_up_hint">Mobile</string>
+    <string name="add_customer_address_pop_up_hint">Address</string>
+    <string name="add_customer_pop_up_button">Add Customer</string>
 </resources>

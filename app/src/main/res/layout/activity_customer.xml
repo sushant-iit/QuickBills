@@ -9,7 +9,7 @@
     tools:context=".activity.CustomerActivity">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/new_customer_card_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/surface"
@@ -29,7 +29,7 @@
                 android:layout_height="60dp"
                 android:contentDescription="@string/add_customer_icon"
                 android:padding="10dp"
-                app:srcCompat="@drawable/ic_action_name" />
+                app:srcCompat="@drawable/ic_add_customer" />
 
             <TextView
                 android:id="@+id/add_new_customer_text_id"
@@ -53,6 +53,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/new_customer_card_id"
         tools:listitem="@layout/customer_row" />
 </androidx.constraintlayout.widget.ConstraintLayout>

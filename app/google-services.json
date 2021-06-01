@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "542962397582",
+    "project_id": "quick-bills-72903",
+    "storage_bucket": "quick-bills-72903.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542962397582:android:a7cb32230caf7186adb4df",
+        "android_client_info": {
+          "package_name": "com.sushant.quickbills"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542962397582-82n1bv93qu69u7rificiapmbfmo7tg6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sushant.quickbills",
+            "certificate_hash": "8b3467902b580a9dfdfff829d642692713a1e90c"
+          }
+        },
+        {
+          "client_id": "542962397582-ttdft791c46119q731he9br1snpjgvop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARf8bSHrokRCpVa2qM6TBV_lUUw0h7_kY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542962397582-ttdft791c46119q731he9br1snpjgvop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Quick Bills</string>
-    <string name="log_in_text">Log-In</string>
-    <string name="sign_up_text">Sign-Up</string>
+    <string name="log_in_text">Already have an account?</string>
+    <string name="sign_up_text">Create an Account</string>
     <string name="email_hint"> Email: </string>
     <string name="email_icn_description">Email Icon</string>
     <string name="password_hint">Password:</string>
@@ -21,9 +21,21 @@
     <string name="customer_mobile_dummy_text">1234567890</string>
     <string name="customer_address_dummy_text">New Delhi, India</string>
     <string name="customer_icon_description">Customer Icon</string>
+    <string name="edit_customer_icon_description">Edit Customer Icon</string>
     <string name="delete_customer_icon_description">Delete Customer Icon</string>
     <string name="add_customer_pop_up_hint">Name</string>
     <string name="add_customer_mob_pop_up_hint">Mobile</string>
     <string name="add_customer_address_pop_up_hint">Address</string>
     <string name="add_customer_pop_up_button">Add Customer</string>
+    <string name="add_new_price_icon">Add new item to stock icon</string>
+    <string name="new_price_default_text">Add New Item</string>
+    <string name="item_icon_description">Price Icon</string>
+    <string name="item_name_textview">Item Name</string>
+    <string name="item_price_dummy_text">$506.20</string>
+    <string name="edit_item_icon_description">Edit Item Icon</string>
+    <string name="delete_item_icon_description">Delete Item Icon</string>
+    <string name="welcome_text">Welcome To Quick Bills</string>
+    <string name="welcome_text_2">Billing Made Easy...</string>
+    <string name="log_in_screeen_text">Log-In</string>
+    <string name="log_in_icon_description"> Log-In Icon </string>
 </resources>

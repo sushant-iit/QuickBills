@@ -13,6 +13,9 @@ class Dashboard : AppCompatActivity() {
         customer_card_id.setOnClickListener(){
             startActivity(Intent(this, CustomerActivity::class.java))
         }
+        item_card_id.setOnClickListener{
+            startActivity(Intent(this, ItemActivity::class.java))
+        }
     }
     //TODO("Link is only added for temporary functionality")
 

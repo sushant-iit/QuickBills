@@ -26,74 +26,59 @@
             android:background="@color/surface">
 
             <ImageView
-                android:id="@+id/edit_customer_id"
+                android:id="@+id/item_icon_id"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/item_icon_description"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_price" />
+
+            <TextView
+                android:id="@+id/item_name_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@id/item_icon_id"
+                android:text="@string/item_name_textview"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_price_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_name_id"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_toEndOf="@id/item_icon_id"
+                android:text="@string/item_price_dummy_text"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold|italic" />
+
+            <ImageView
+                android:id="@+id/edit_item_id"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_below="@id/delete_customer_id"
-                android:layout_alignBottom="@id/customer_icon_id"
+                android:layout_below="@id/delete_item_id"
+                android:layout_alignBottom="@id/item_icon_id"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="false"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:contentDescription="@string/edit_customer_icon_description"
+                android:contentDescription="@string/edit_item_icon_description"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
             <ImageView
-                android:id="@+id/customer_icon_id"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:contentDescription="@string/customer_icon_description"
-                android:padding="18dp"
-                app:srcCompat="@drawable/ic_customer_v2" />
-
-            <TextView
-                android:id="@+id/customer_name_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toEndOf="@id/customer_icon_id"
-                android:text="@string/customer_name_textview"
-                android:textColor="@color/foreground"
-                android:textSize="@dimen/standard_text_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/customer_mobile_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/customer_name_id"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toEndOf="@id/customer_icon_id"
-                android:text="@string/customer_mobile_dummy_text"
-                android:textColor="@color/foreground"
-                android:textSize="@dimen/standard_text_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/customer_address_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/customer_mobile_id"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="0dp"
-                android:layout_toEndOf="@id/customer_icon_id"
-                android:text="@string/customer_address_dummy_text"
-                android:textColor="@color/foreground"
-                android:textSize="@dimen/standard_text_size"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/delete_customer_id"
+                android:id="@+id/delete_item_id"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
@@ -102,7 +87,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
-                android:contentDescription="@string/delete_customer_icon_description"
+                android:contentDescription="@string/delete_item_icon_description"
                 app:srcCompat="@drawable/ic_outline_delete_forever_24" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

@@ -58,6 +58,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/customer_card_id"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5sp"
@@ -66,7 +67,6 @@
             app:cardCornerRadius="@dimen/card_radius">
 
             <LinearLayout
-                android:id="@+id/customer_card_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -194,6 +194,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/item_card_id"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5sp"

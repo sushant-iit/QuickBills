@@ -11,10 +11,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //TODO("Remember to change this function of login button")
-        submitBtn.setOnClickListener {
+        log_in_btn_id.setOnClickListener {
             val myIntent = Intent(
                 this,
-                Dashboard::class.java
+                LoginActivity::class.java
             )
             startActivity(myIntent)
         }

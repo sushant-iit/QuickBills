@@ -35,7 +35,11 @@
     <string name="edit_item_icon_description">Edit Item Icon</string>
     <string name="delete_item_icon_description">Delete Item Icon</string>
     <string name="welcome_text">Welcome To Quick Bills</string>
-    <string name="welcome_text_2">Billing Made Easy...</string>
+    <string name="welcome_text_2">Billing Made Easy &#8230;</string>
     <string name="log_in_screeen_text">Log-In</string>
     <string name="log_in_icon_description"> Log-In Icon </string>
+    <string name="sign_up_icon_description"> Sign-Up Icon </string>
+    <string name="sign_up_screeen_text">Sign-Up</string>
+    <string name="confirm_password_hint">Confirm Password:</string>
+    <string name="user_name_hint">Your Good Name:</string>
 </resources>

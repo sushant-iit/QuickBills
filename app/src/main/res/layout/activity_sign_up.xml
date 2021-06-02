@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginActivityId"
+    android:id="@+id/signUpActivityId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".activity.LoginActivity">
+    tools:context=".activity.SignUpActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -34,27 +34,44 @@
                 android:id="@+id/imageView7"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:contentDescription="@string/log_in_icon_description"
-                app:srcCompat="@drawable/ic_baseline_login_24" />
+                android:contentDescription="@string/sign_up_icon_description"
+                app:srcCompat="@drawable/ic_add_customer" />
 
             <TextView
-                android:id="@+id/login_screen_title_id"
+                android:id="@+id/signup_screen_title_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/imageView7"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/imageView7"
-                android:text="@string/log_in_screeen_text"
+                android:text="@string/sign_up_screeen_text"
                 android:textColor="@color/foreground"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/login_email_id_entered_id"
+                android:id="@+id/user_name_entered_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/login_screen_title_id"
+                android:layout_below="@id/signup_screen_title_id"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:autofillHints="AUTOFILL_HINT_PERSON_NAME"
+                android:backgroundTint="@color/secondary"
+                android:ems="10"
+                android:hint="@string/user_name_hint"
+                android:inputType="text"
+                android:textColor="@color/foreground"
+                android:textColorHint="@color/text_hint"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/sign_up_email_entered_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/user_name_entered_id"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -68,14 +85,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/login_password_entered_id"
+                android:id="@+id/sign_up_password_entered_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/login_email_id_entered_id"
+                android:layout_below="@id/sign_up_email_entered_id"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 android:autofillHints="no"
                 android:backgroundTint="@color/secondary"
                 android:ems="10"
@@ -86,11 +102,30 @@
                 android:textSize="@dimen/standard_text_size"
                 android:textStyle="bold" />
 
+            <EditText
+                android:id="@+id/sign_up_confirm_password_entered_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sign_up_password_entered_id"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="no"
+                android:backgroundTint="@color/secondary"
+                android:ems="10"
+                android:hint="@string/confirm_password_hint"
+                android:inputType="textPassword"
+                android:textColor="@color/foreground"
+                android:textColorHint="@color/text_hint"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+
             <Button
-                android:id="@+id/log_in_proceed_btn"
+                android:id="@+id/sign_up_in_proceed_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/login_password_entered_id"
+                android:layout_below="@id/sign_up_confirm_password_entered_id"
                 android:layout_centerInParent="true"
                 android:backgroundTint="@color/secondary"
                 android:elevation="5dp"

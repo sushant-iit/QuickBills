@@ -11,19 +11,36 @@ import kotlinx.android.synthetic.main.customer_row.view.*
 
 class CustomerListAdapter(
     private val customerList: ArrayList<Customer>,
-    private val context: Context
+    private val context: Context,
+    private val listener : customerAdapterClickListener
 ) :
     RecyclerView.Adapter<CustomerListAdapter.CustomerListViewHolder>() {
 
     //This class holds views Ids;
-    class CustomerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CustomerListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val customerName = itemView.customer_name_id
         val customerMobile = itemView.customer_mobile_id
         val customerAddress = itemView.customer_address_id
+        val editBtn = itemView.edit_customer_id
+        val deleteBtn = itemView.delete_customer_id
+
+        init{
+            editBtn.setOnClickListener(this)
+            deleteBtn.setOnClickListener(this)
+        }
+
         fun bindViews(customer : Customer){
             customerName.text = customer.Name
             customerMobile.text = customer.Number.toString()
             customerAddress.text = customer.Address
+        }
+
+        //This basically passes the item clicked position to CustomerActivity which handles it correctly
+        override fun onClick(v: View?) {
+            when(v!!.id){
+                R.id.edit_customer_id -> listener.showEditCustomerPopUp(adapterPosition)
+                R.id.delete_customer_id->listener.showDeleteCustomerPopUp(adapterPosition)
+            }
         }
     }
 
@@ -40,5 +57,10 @@ class CustomerListAdapter(
 
     override fun getItemCount(): Int {
         return customerList.size
+    }
+
+    interface customerAdapterClickListener{
+        fun showEditCustomerPopUp(position: Int)
+        fun showDeleteCustomerPopUp(position: Int)
     }
 }

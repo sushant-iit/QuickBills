@@ -42,4 +42,23 @@
     <string name="sign_up_screeen_text">Sign-Up</string>
     <string name="confirm_password_hint">Confirm Password:</string>
     <string name="user_name_hint">Your Good Name:</string>
+    <string name="edit_customer_icon">Edit Customer Icon</string>
+    <string name="edit_customer_pop_up_button">Update Customer</string>
+    <string name="item_name_dummy_text">Item Name</string>
+    <string name="item_name_default_text">Item Name </string>
+    <string name="item_price_default_text">Price</string>
+    <string name="item_quantity_default_text">Qty</string>
+    <string name="item_amount_default_text">Amount</string>
+    <string name="grand_total_heading">Grand Total:</string>
+    <string name="grand_total_dummy_text">100000</string>
+    <string name="customer_details_heading">Customer Details:</string>
+    <string name="customer_mobile_text_view">Customer Mobile</string>
+    <string name="customer_address_textView">Customer Address</string>
+    <string name="delete_msg">Are you sure to delete this item?</string>
+    <string name="cancel_delete_btn_text">Cancel</string>
+    <string name="delete_icn_content_description">Delete Icon</string>
+    <string name="delete_btn_text">Delete</string>
+    <string name="log_out_title">Log out</string>
+    <string name="welcome_msg">Hello: Mr. </string>
+    <string name="user_name_dummy_text">user_name</string>
 </resources>

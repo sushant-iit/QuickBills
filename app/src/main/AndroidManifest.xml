@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuickBills">
-        <activity android:name=".activity.SignUpActivity"></activity>
+        <activity android:name=".activity.NewBillActivity"
+            android:label="New Bill"/>
+        <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.ItemActivity"

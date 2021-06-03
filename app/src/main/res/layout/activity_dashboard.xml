@@ -7,16 +7,45 @@
     android:background="@color/background"
     tools:context=".activity.Dashboard">
 
+    <TextView
+        android:id="@+id/welcomeId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="2.5"
+        android:padding="2dp"
+        android:text="@string/welcome_msg"
+        android:textColor="@color/foreground"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/user_name_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="2.5"
+        android:padding="2dp"
+        android:text="@string/user_name_dummy_text"
+        android:textColor="@color/foreground"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/welcomeId"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:padding="10sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/welcomeId">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/new_bill_card_id"

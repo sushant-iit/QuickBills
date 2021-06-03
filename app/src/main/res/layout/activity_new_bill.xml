@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_bill_activity_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".activity.NewBillActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/background"
+        app:cardBackgroundColor="@color/background"
+        app:layout_constraintBottom_toTopOf="@+id/bill_heading_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/grand_total_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="2.5"
+                android:padding="2dp"
+                android:text="@string/grand_total_heading"
+                android:textColor="@color/foreground"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_bill_icon" />
+
+            <TextView
+                android:id="@+id/grand_total_value"
+                android:layout_width="146dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="2.5"
+                android:padding="2dp"
+                android:text="@string/grand_total_dummy_text"
+                android:textAlignment="gravity"
+                android:textColor="@color/secondary"
+                android:textSize="@dimen/dashboard_text"
+                android:textStyle="bold|italic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/grand_total_heading" />
+
+            <ImageView
+                android:id="@+id/add_bill_icon"
+                android:layout_width="92dp"
+                android:layout_height="87dp"
+                android:layout_margin="10dp"
+                android:contentDescription="@string/new_bill_icn_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_bill_add" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="@dimen/card_radius"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/grand_total_value"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/customer_name_heading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/customer_details_heading"
+                        android:textColor="@color/foreground"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/customer_name_textview"
+                        android:textColor="@color/foreground"
+                        android:textSize="@dimen/standard_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/customer_mobile_view_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/customer_mobile_text_view"
+                        android:textColor="@color/foreground"
+                        android:textSize="@dimen/standard_text_size"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/customer_address_text_view_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.5"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/customer_address_textView"
+                        android:textColor="@color/foreground"
+                        android:textSize="@dimen/standard_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bill_heading_card"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/item_name_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:padding="2dp"
+                android:text="@string/item_name_default_text"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_price_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:text="@string/item_price_default_text"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_qty_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:text="@string/item_quantity_default_text"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_amount_heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:padding="2dp"
+                android:text="@string/item_amount_default_text"
+                android:textColor="@color/foreground"
+                android:textSize="@dimen/standard_text_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="417dp"
+        android:layout_height="504dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/bill_row" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="@id/new_bill_activity_id"
+        app:layout_constraintBottom_toBottomOf="@id/new_bill_activity_id"
+        android:layout_margin="30dp"
+        app:srcCompat="@drawable/ic_add_new_bill"
+        tools:layout_editor_absoluteX="294dp"
+        tools:layout_editor_absoluteY="470dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

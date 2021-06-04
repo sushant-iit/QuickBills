@@ -10,7 +10,7 @@ import com.sushant.quickbills.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var auth : FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         //If the user is already logged-in, take him directly to the dashboard:
         auth = Firebase.auth
-        if(auth.currentUser!=null){
+        if (auth.currentUser != null) {
             startActivity(Intent(this, Dashboard::class.java))
             finish()
         }

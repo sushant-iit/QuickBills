@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/search"
         android:icon="@drawable/ic_search_whilte_24dp"
         android:title="@string/search_customer_text"
         app:actionViewClass="android.widget.SearchView"

@@ -213,7 +213,7 @@
         app:layout_constraintEnd_toEndOf="@id/new_bill_activity_id"
         app:layout_constraintBottom_toBottomOf="@id/new_bill_activity_id"
         android:layout_margin="30dp"
-        app:srcCompat="@drawable/ic_add_new_bill"
+        app:srcCompat="@drawable/ic_add_new"
         tools:layout_editor_absoluteX="294dp"
         tools:layout_editor_absoluteY="470dp" />
 

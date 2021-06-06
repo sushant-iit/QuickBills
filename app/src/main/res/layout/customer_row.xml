@@ -29,14 +29,11 @@
                 android:id="@+id/edit_customer_id"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_below="@id/delete_customer_id"
-                android:layout_alignBottom="@id/customer_icon_id"
-                android:layout_alignParentEnd="true"
+                android:layout_toStartOf="@id/delete_customer_id"
                 android:layout_alignParentBottom="false"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="2dp"
                 android:contentDescription="@string/edit_customer_icon_description"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
@@ -50,7 +47,7 @@
 
             <TextView
                 android:id="@+id/customer_name_id"
-                android:layout_width="wrap_content"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="6dp"
@@ -98,10 +95,8 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="false"
-                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="2dp"
                 android:contentDescription="@string/delete_customer_icon_description"
                 app:srcCompat="@drawable/ic_outline_delete_forever_24" />
         </RelativeLayout>

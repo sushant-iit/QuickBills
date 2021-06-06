@@ -61,4 +61,5 @@
     <string name="log_out_title">Log out</string>
     <string name="welcome_msg">Hello: Mr. </string>
     <string name="user_name_dummy_text">user_name</string>
+    <string name="add_new_customer_btn_description">Add Customer Button</string>
 </resources>

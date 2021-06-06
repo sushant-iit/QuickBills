@@ -63,11 +63,12 @@ class CustomersAdapter(
     }
 
     override fun onBindViewHolder(holder: CustomersViewHolder, position: Int, model: Customer) {
-        holder.bindViews(model)
+            holder.bindViews(model)
     }
 
     interface onClickListener {
         fun showEditCustomerPopUp(customerReference: DatabaseReference, currCustomer: Customer)
         fun showDeleteCustomerPopUp(customerReference: DatabaseReference, currCustomer: Customer)
     }
+
 }

@@ -1,8 +1,11 @@
 package com.sushant.quickbills.activity
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Patterns
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +18,6 @@ import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.CustomersAdapter
 import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Customer
 import kotlinx.android.synthetic.main.activity_customer.*
@@ -24,12 +26,14 @@ import kotlinx.android.synthetic.main.delete_item_pop_up.view.*
 import kotlinx.android.synthetic.main.edit_customer_pop_up.view.*
 
 
-class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
+class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener,
+    SearchView.OnQueryTextListener {
     private val layoutManager = LinearLayoutManager(this)
     private var customersAdapter: CustomersAdapter? = null
     private var dialogBuilder: AlertDialog.Builder? = null
     private var dialog: AlertDialog? = null
     private var auth: FirebaseAuth? = null
+    private var timer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
         //This is to set the recycler view
         val currUserId = auth!!.currentUser!!.uid
         val query: Query = Firebase.database.reference
-            .child("UserData").child(currUserId).child("Customers")
+            .child("UserData").child(currUserId).child("Customers").orderByChild(USER_NAME_FIELD)
         val options: FirebaseRecyclerOptions<Customer> = FirebaseRecyclerOptions.Builder<Customer>()
             .setQuery(query, Customer::class.java)
             .build()
@@ -51,7 +55,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
         customersAdapter!!.startListening()
 
         //This is to add_customer_pop_up
-        new_customer_card_id.setOnClickListener {
+        add_customer_button_id.setOnClickListener {
             showAddCustomerPopUp()
         }
 
@@ -60,9 +64,13 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
     //This is to add search bar to our customer_activity
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.customer_menu, menu)
+        val searchItem: MenuItem = menu!!.findItem(R.id.search)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
         return super.onCreateOptionsMenu(menu)
     }
 
+    //New Functions
     private fun showAddCustomerPopUp() {
         val view = layoutInflater.inflate(R.layout.add_customer_pop_up, null, false)
         val customerName = view.entered_customer_name_pop_up
@@ -100,9 +108,8 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
             dialog!!.dismiss()
             val database = Firebase.database.reference
             database.child(USER_DATA_FLIED).child(auth!!.currentUser!!.uid).child(CUSTOMERS_FIELD)
-                .push().setValue(newCustomer).addOnCompleteListener{
-                    task->
-                    if(task.isSuccessful)
+                .push().setValue(newCustomer).addOnCompleteListener { task ->
+                    if (task.isSuccessful)
                         Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show()
                     else
                         Toast.makeText(this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show()
@@ -199,6 +206,33 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener {
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
         dialog!!.show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
+    //Searching Functionality Implementation
+    override fun onQueryTextChange(newText: String?): Boolean {
+        timer?.cancel()
+        //Wait for some time after user stops typing
+        timer = object : CountDownTimer(1300, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                val newQuery: Query = Firebase.database.reference
+                    .child("UserData").child(auth!!.currentUser!!.uid)
+                    .child("Customers").orderByChild(USER_NAME_FIELD).startAt(newText)
+                    .endAt(newText + "\uf8ff")
+                val newOptions: FirebaseRecyclerOptions<Customer> =
+                    FirebaseRecyclerOptions.Builder<Customer>()
+                        .setQuery(newQuery, Customer::class.java)
+                        .build()
+                customersAdapter!!.updateOptions(newOptions)
+            }
+        }.start()
+        return true
     }
 
 }

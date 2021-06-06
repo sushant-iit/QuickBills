@@ -8,51 +8,27 @@
     android:background="@color/background"
     tools:context=".activity.CustomerActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/new_customer_card_id"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_customer_button_id"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:cardBackgroundColor="@color/background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/input_radius">
-
-            <ImageView
-                android:id="@+id/add_new_customer_id"
-                android:layout_width="58dp"
-                android:layout_height="60dp"
-                android:contentDescription="@string/add_customer_icon"
-                android:padding="10dp"
-                app:srcCompat="@drawable/ic_add_customer" />
-
-            <TextView
-                android:id="@+id/add_new_customer_text_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/add_new_customer_id"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_toEndOf="@id/add_new_customer_id"
-                android:text="@string/new_customer_default_text"
-                android:textColor="@color/foreground"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/add_new_customer_btn_description"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@id/customer_activity"
+        app:layout_constraintEnd_toEndOf="@id/customer_activity"
+        app:srcCompat="@drawable/ic_add_new" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customer_list_recycler_view_id"
-        android:layout_width="409dp"
-        android:layout_height="669dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_customer_card_id"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/customer_row" />
 </androidx.constraintlayout.widget.ConstraintLayout>

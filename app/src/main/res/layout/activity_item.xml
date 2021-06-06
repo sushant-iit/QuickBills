@@ -2,57 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_activity_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".activity.ItemActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/new_price_card_id"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_item_button_id"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/surface"
-        app:cardBackgroundColor="@color/background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/input_radius">
-
-            <ImageView
-                android:id="@+id/add_new_price_id"
-                android:layout_width="58dp"
-                android:layout_height="60dp"
-                android:contentDescription="@string/add_new_price_icon"
-                android:padding="10dp"
-                app:srcCompat="@drawable/ic_price" />
-
-            <TextView
-                android:id="@+id/add_new_price_view_text_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/add_new_price_id"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
-                android:layout_toEndOf="@id/add_new_price_id"
-                android:text="@string/new_price_default_text"
-                android:textColor="@color/foreground"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        android:layout_margin="40dp"
+        android:clickable="true"
+        android:contentDescription="@string/add_new_item_btn_description"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@id/item_activity_id"
+        app:layout_constraintEnd_toEndOf="@id/item_activity_id"
+        app:srcCompat="@drawable/ic_add_new" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list_recycler_view_id"
-        android:layout_width="409dp"
-        android:layout_height="669dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_price_card_id"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

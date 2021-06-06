@@ -62,4 +62,9 @@
     <string name="welcome_msg">Hello: Mr. </string>
     <string name="user_name_dummy_text">user_name</string>
     <string name="add_new_customer_btn_description">Add Customer Button</string>
+    <string name="add_new_item_btn_description">Add Item Button</string>
+    <string name="add_item_icon">Add Item Icon</string>
+    <string name="add_item_name_pop_up_hint">Item Name</string>
+    <string name="add_item_price_pop_up_hint">Item Price</string>
+    <string name="add_item_pop_up_button">Add Item</string>
 </resources>

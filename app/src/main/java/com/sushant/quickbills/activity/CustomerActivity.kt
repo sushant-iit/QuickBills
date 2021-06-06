@@ -26,39 +26,47 @@ import kotlinx.android.synthetic.main.delete_item_pop_up.view.*
 import kotlinx.android.synthetic.main.edit_customer_pop_up.view.*
 
 
-class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener,
+class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
     SearchView.OnQueryTextListener {
     private val layoutManager = LinearLayoutManager(this)
     private var customersAdapter: CustomersAdapter? = null
     private var dialogBuilder: AlertDialog.Builder? = null
     private var dialog: AlertDialog? = null
-    private var auth: FirebaseAuth? = null
+    private var auth: FirebaseAuth = Firebase.auth
     private var timer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer)
 
-        //Initialising variables:
-        auth = Firebase.auth
-
         //This is to set the recycler view
-        val currUserId = auth!!.currentUser!!.uid
+        val currUserId = auth.currentUser!!.uid
         val query: Query = Firebase.database.reference
-            .child("UserData").child(currUserId).child("Customers").orderByChild(USER_NAME_FIELD)
+            .child("UserData").child(currUserId).child("Customers").orderByChild(
+                CUSTOMERS_NAME_FIELD
+            )
         val options: FirebaseRecyclerOptions<Customer> = FirebaseRecyclerOptions.Builder<Customer>()
             .setQuery(query, Customer::class.java)
             .build()
         customersAdapter = CustomersAdapter(this, options, this)
         customer_list_recycler_view_id.adapter = customersAdapter
         customer_list_recycler_view_id.layoutManager = layoutManager
-        customersAdapter!!.startListening()
 
         //This is to add_customer_pop_up
         add_customer_button_id.setOnClickListener {
             showAddCustomerPopUp()
         }
 
+    }
+
+    override fun onStart() {
+        customersAdapter!!.startListening()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        customersAdapter!!.startListening()
+        super.onStop()
     }
 
     //This is to add search bar to our customer_activity
@@ -104,10 +112,9 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener,
                 customerAddress.text.toString()
             )
 
-            //TODO("Call the database function to add a new customer, temporary method is created now")
             dialog!!.dismiss()
             val database = Firebase.database.reference
-            database.child(USER_DATA_FLIED).child(auth!!.currentUser!!.uid).child(CUSTOMERS_FIELD)
+            database.child(USER_DATA_FIELD).child(auth.currentUser!!.uid).child(CUSTOMERS_FIELD)
                 .push().setValue(newCustomer).addOnCompleteListener { task ->
                     if (task.isSuccessful)
                         Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show()
@@ -222,7 +229,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.onClickListener,
 
             override fun onFinish() {
                 val newQuery: Query = Firebase.database.reference
-                    .child("UserData").child(auth!!.currentUser!!.uid)
+                    .child("UserData").child(auth.currentUser!!.uid)
                     .child("Customers").orderByChild(USER_NAME_FIELD).startAt(newText)
                     .endAt(newText + "\uf8ff")
                 val newOptions: FirebaseRecyclerOptions<Customer> =

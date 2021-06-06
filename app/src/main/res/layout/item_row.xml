@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/item_name_id"
-                android:layout_width="wrap_content"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
@@ -64,16 +64,12 @@
 
             <ImageView
                 android:id="@+id/edit_item_id"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_below="@id/delete_item_id"
-                android:layout_alignBottom="@id/item_icon_id"
-                android:layout_alignParentEnd="true"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toStartOf="@id/delete_item_id"
                 android:layout_alignParentBottom="false"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
                 android:contentDescription="@string/edit_item_icon_description"
                 app:srcCompat="@drawable/ic_baseline_edit_24" />
 
@@ -83,9 +79,7 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="false"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="2dp"
                 android:contentDescription="@string/delete_item_icon_description"
                 app:srcCompat="@drawable/ic_outline_delete_forever_24" />

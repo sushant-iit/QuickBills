@@ -12,7 +12,7 @@
         android:id="@+id/add_customer_button_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="40dp"
         android:clickable="true"
         android:contentDescription="@string/add_new_customer_btn_description"
         android:focusable="true"

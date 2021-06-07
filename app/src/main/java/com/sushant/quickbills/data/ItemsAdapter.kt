@@ -39,11 +39,11 @@ class ItemsAdapter(
         //Passing the item reference clicked
         override fun onClick(v: View?) {
             when (v!!.id) {
-                R.id.edit_item_id -> listener.showEditCustomerPopUp(
+                R.id.edit_item_id -> listener.showEditItemPopUp(
                     getRef(adapterPosition),
                     getItem(adapterPosition)
                 )
-                R.id.delete_item_id -> listener.showDeleteCustomerPopUp(
+                R.id.delete_item_id -> listener.showDeleteItemPopUp(
                     getRef(adapterPosition),
                     getItem(adapterPosition)
                 )
@@ -61,7 +61,7 @@ class ItemsAdapter(
     }
 
     interface OnClickListener {
-        fun showEditCustomerPopUp(itemReference: DatabaseReference, currItem: Item)
-        fun showDeleteCustomerPopUp(itemReference: DatabaseReference, currItem: Item)
+        fun showEditItemPopUp(itemReference: DatabaseReference, currItem: Item)
+        fun showDeleteItemPopUp(itemReference: DatabaseReference, currItem: Item)
     }
 }

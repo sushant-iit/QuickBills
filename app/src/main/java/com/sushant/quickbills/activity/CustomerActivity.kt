@@ -71,7 +71,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
 
     //This is to add search bar to our customer_activity
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.customer_menu, menu)
+        menuInflater.inflate(R.menu.search_menu, menu)
         val searchItem: MenuItem = menu!!.findItem(R.id.search)
         val searchView: SearchView = searchItem.actionView as SearchView
         searchView.setOnQueryTextListener(this)

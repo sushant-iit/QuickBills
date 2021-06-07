@@ -1,6 +1,10 @@
 package com.sushant.quickbills.activity
 
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,14 +24,19 @@ import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.add_item_pop_up.view.*
 import kotlinx.android.synthetic.main.delete_item_pop_up.view.*
+import kotlinx.android.synthetic.main.edit_item_pop_up.view.*
+import kotlinx.android.synthetic.main.item_row.*
+import java.util.*
 
-class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener {
+class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
+    SearchView.OnQueryTextListener {
     private var dialogBuilder: AlertDialog.Builder? = null
     private var dialog: AlertDialog? = null
     private val database = Firebase.database.reference
     private val auth = Firebase.auth
     private var itemsAdapter: ItemsAdapter? = null
     private val layoutManager = LinearLayoutManager(this)
+    private var timer: CountDownTimer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +69,14 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener {
     override fun onStop() {
         itemsAdapter!!.stopListening()
         super.onStop()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        val searchItem: MenuItem = menu!!.findItem(R.id.search)
+        val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+        return super.onCreateOptionsMenu(menu)
     }
 
     //This is to create items:-
@@ -99,7 +116,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener {
                     else
                         Toast.makeText(this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show()
                 }
-//            itemsAdapter.notify()
+            itemsAdapter!!.notifyDataSetChanged()
         }
 
         dialogBuilder = AlertDialog.Builder(this).setView(view)
@@ -107,11 +124,54 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener {
         dialog!!.show()
     }
 
-    override fun showEditCustomerPopUp(itemReference: DatabaseReference, currItem: Item) {
+    //This is to edit items:-
+    override fun showEditItemPopUp(itemReference: DatabaseReference, currItem: Item) {
+        val view = layoutInflater.inflate(R.layout.edit_item_pop_up, null, false)
+        val itemName = view.entered_edited_item_name_pop_up
+        val itemPrice = view.entered_edited_item_price_pop_up
+        val submitBtn = view.edit_item_pop_up_button
 
+        itemName.setText(currItem.name.toString())
+        itemPrice.setText(currItem.price.toString())
+
+        submitBtn.setOnClickListener {
+
+            if (itemName.text.toString().trim().isEmpty()) {
+                itemName.error = "Please enter item name!!"
+                itemName.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (itemPrice.text.toString().isEmpty() || itemPrice.text.toString()
+                    .toDoubleOrNull() == null
+            ) {
+                itemPrice.error = "Please enter item price!!"
+                itemPrice.requestFocus()
+                return@setOnClickListener
+            }
+
+            val updatedItem = Item(
+                itemName.text.toString(),
+                itemPrice.text.toString().toDouble(),
+                itemName.text.toString().replace(" ", "").lowercase()
+            )
+
+            dialog!!.dismiss()
+            itemReference.setValue(updatedItem).addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                    Toast.makeText(this, "Update Successful", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+        dialogBuilder = AlertDialog.Builder(this).setView(view)
+        dialog = dialogBuilder!!.create()
+        dialog!!.show()
     }
 
-    override fun showDeleteCustomerPopUp(itemReference: DatabaseReference, currItem: Item) {
+    //This is to delete items:-
+    override fun showDeleteItemPopUp(itemReference: DatabaseReference, currItem: Item) {
         val view = layoutInflater.inflate(R.layout.delete_item_pop_up, null, false)
         val cancelDelBtn = view.cancel_delete_pop_up_btn_id
         val proceedDelBtn = view.proceed_delete_pop_up_btn_id
@@ -135,6 +195,36 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener {
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
         dialog!!.show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        val searchString = newText!!.replace(" ", "").lowercase()
+        timer?.cancel()
+        //Wait for some time after user stops typing, then execute the query:
+        timer = object : CountDownTimer(1300, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                val newQuery: Query =
+                    Firebase.database.reference.child(USER_DATA_FIELD).child(auth.currentUser!!.uid)
+                        .child(
+                            ITEMS_FIELD
+                        ).orderByChild("searchKey")
+                        .startAt(searchString)
+                        .endAt(searchString + "\uf8ff")
+                val newOptions: FirebaseRecyclerOptions<Item> = FirebaseRecyclerOptions.Builder<Item>()
+                    .setQuery(newQuery, Item::class.java)
+                    .build()
+                itemsAdapter!!.updateOptions(newOptions)
+                itemsAdapter!!.notifyDataSetChanged()
+            }
+        }.start()
+        return true
     }
 
 

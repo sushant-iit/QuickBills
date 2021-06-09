@@ -19,12 +19,11 @@ import com.sushant.quickbills.R
 import com.sushant.quickbills.data.ITEMS_FIELD
 import com.sushant.quickbills.data.ITEMS_NAME_FIELD
 import com.sushant.quickbills.data.ItemsAdapter
-import com.sushant.quickbills.data.USER_DATA_FIELD
 import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_item.*
-import kotlinx.android.synthetic.main.add_item_pop_up.view.*
-import kotlinx.android.synthetic.main.delete_item_pop_up.view.*
-import kotlinx.android.synthetic.main.edit_item_pop_up.view.*
+import kotlinx.android.synthetic.main.pop_up_add_item.view.*
+import kotlinx.android.synthetic.main.pop_up_delete.view.*
+import kotlinx.android.synthetic.main.pop_up_edit_item.view.*
 import kotlinx.android.synthetic.main.item_row.*
 import java.util.*
 
@@ -45,9 +44,8 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
         //Setting Up the Recycler View:
         val currUserId = auth.currentUser!!.uid
         val query: Query =
-            Firebase.database.reference.child(USER_DATA_FIELD).child(currUserId).child(
-                ITEMS_FIELD
-            ).orderByChild(ITEMS_NAME_FIELD)
+            Firebase.database.reference.child(ITEMS_FIELD).child(currUserId)
+                .orderByChild(ITEMS_NAME_FIELD)
         val options: FirebaseRecyclerOptions<Item> = FirebaseRecyclerOptions.Builder<Item>()
             .setQuery(query, Item::class.java)
             .build()
@@ -81,7 +79,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
 
     //This is to create items:-
     private fun showAddItemPopUp() {
-        val view = layoutInflater.inflate(R.layout.add_item_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_add_item, null, false)
         val itemName = view.entered_item_name_pop_up
         val itemPrice = view.entered_item_price_pop_up
         val submitBtn = view.add_item_pop_up_button
@@ -109,7 +107,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
             )
 
             dialog!!.dismiss()
-            database.child(USER_DATA_FIELD).child(auth.currentUser!!.uid).child(ITEMS_FIELD).push()
+            database.child(ITEMS_FIELD).child(auth.currentUser!!.uid).push()
                 .setValue(newItem).addOnCompleteListener { task ->
                     if (task.isSuccessful)
                         Toast.makeText(this, "Item Added", Toast.LENGTH_SHORT).show()
@@ -126,7 +124,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
 
     //This is to edit items:-
     override fun showEditItemPopUp(itemReference: DatabaseReference, currItem: Item) {
-        val view = layoutInflater.inflate(R.layout.edit_item_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_edit_item, null, false)
         val itemName = view.entered_edited_item_name_pop_up
         val itemPrice = view.entered_edited_item_price_pop_up
         val submitBtn = view.edit_item_pop_up_button
@@ -172,7 +170,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
 
     //This is to delete items:-
     override fun showDeleteItemPopUp(itemReference: DatabaseReference, currItem: Item) {
-        val view = layoutInflater.inflate(R.layout.delete_item_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_delete, null, false)
         val cancelDelBtn = view.cancel_delete_pop_up_btn_id
         val proceedDelBtn = view.proceed_delete_pop_up_btn_id
 
@@ -211,15 +209,14 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
 
             override fun onFinish() {
                 val newQuery: Query =
-                    Firebase.database.reference.child(USER_DATA_FIELD).child(auth.currentUser!!.uid)
-                        .child(
-                            ITEMS_FIELD
-                        ).orderByChild("searchKey")
+                    Firebase.database.reference.child(ITEMS_FIELD).child(auth.currentUser!!.uid)
+                        .orderByChild("searchKey")
                         .startAt(searchString)
                         .endAt(searchString + "\uf8ff")
-                val newOptions: FirebaseRecyclerOptions<Item> = FirebaseRecyclerOptions.Builder<Item>()
-                    .setQuery(newQuery, Item::class.java)
-                    .build()
+                val newOptions: FirebaseRecyclerOptions<Item> =
+                    FirebaseRecyclerOptions.Builder<Item>()
+                        .setQuery(newQuery, Item::class.java)
+                        .build()
                 itemsAdapter!!.updateOptions(newOptions)
                 itemsAdapter!!.notifyDataSetChanged()
             }

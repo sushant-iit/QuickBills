@@ -68,4 +68,7 @@
     <string name="add_item_price_pop_up_hint">Item Price</string>
     <string name="add_item_pop_up_button">Add Item</string>
     <string name="edit_item_pop_up_button">Update Price</string>
+    <string name="choose_customer_pop_up_button">Select Customer</string>
+    <string name="autcomplete_name_dummy_text">Name</string>
+    <string name="add_bill_row_btn">Add New Item</string>
 </resources>

@@ -21,9 +21,9 @@ import com.sushant.quickbills.R
 import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Customer
 import kotlinx.android.synthetic.main.activity_customer.*
-import kotlinx.android.synthetic.main.add_customer_pop_up.view.*
-import kotlinx.android.synthetic.main.delete_item_pop_up.view.*
-import kotlinx.android.synthetic.main.edit_customer_pop_up.view.*
+import kotlinx.android.synthetic.main.pop_up_add_customer.view.*
+import kotlinx.android.synthetic.main.pop_up_delete.view.*
+import kotlinx.android.synthetic.main.pop_up_edit_customer.view.*
 
 
 class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
@@ -42,7 +42,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
         //This is to set the recycler view
         val currUserId = auth.currentUser!!.uid
         val query: Query = Firebase.database.reference
-            .child("UserData").child(currUserId).child("Customers").orderByChild(
+            .child(CUSTOMERS_FIELD).child(currUserId).orderByChild(
                 CUSTOMERS_NAME_FIELD
             )
         val options: FirebaseRecyclerOptions<Customer> = FirebaseRecyclerOptions.Builder<Customer>()
@@ -80,7 +80,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
 
     //New Functions
     private fun showAddCustomerPopUp() {
-        val view = layoutInflater.inflate(R.layout.add_customer_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_add_customer, null, false)
         val customerName = view.entered_customer_name_pop_up
         val customerMobile = view.entered_customer_mobile_pop_up
         val customerAddress = view.entered_customer_address_pop_u
@@ -114,7 +114,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
 
             dialog!!.dismiss()
             val database = Firebase.database.reference
-            database.child(USER_DATA_FIELD).child(auth.currentUser!!.uid).child(CUSTOMERS_FIELD)
+            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
                 .push().setValue(newCustomer).addOnCompleteListener { task ->
                     if (task.isSuccessful)
                         Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show()
@@ -133,7 +133,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
         customerReference: DatabaseReference,
         currCustomer: Customer
     ) {
-        val view = layoutInflater.inflate(R.layout.edit_customer_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_edit_customer, null, false)
         val customerName = view.entered_edit_customer_name_pop_up
         val customerMobile = view.entered_edit_customer_mobile_pop_up
         val customerAddress = view.entered_edit_customer_address_pop_up
@@ -190,7 +190,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
         customerReference: DatabaseReference,
         currCustomer: Customer
     ) {
-        val view = layoutInflater.inflate(R.layout.delete_item_pop_up, null, false)
+        val view = layoutInflater.inflate(R.layout.pop_up_delete, null, false)
         val cancelDelBtn = view.cancel_delete_pop_up_btn_id
         val proceedDelBtn = view.proceed_delete_pop_up_btn_id
 
@@ -229,8 +229,8 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
 
             override fun onFinish() {
                 val newQuery: Query = Firebase.database.reference
-                    .child("UserData").child(auth.currentUser!!.uid)
-                    .child("Customers").orderByChild(USER_NAME_FIELD).startAt(newText)
+                    .child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
+                    .orderByChild(USER_NAME_FIELD).startAt(newText)
                     .endAt(newText + "\uf8ff")
                 val newOptions: FirebaseRecyclerOptions<Customer> =
                     FirebaseRecyclerOptions.Builder<Customer>()

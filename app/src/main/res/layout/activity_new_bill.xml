@@ -89,7 +89,7 @@
                         android:paddingEnd="10dp"
                         android:text="@string/customer_details_heading"
                         android:textColor="@color/foreground"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/standard_text_size"
                         android:textStyle="bold" />
 
                     <TextView
@@ -209,12 +209,12 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_constraintEnd_toEndOf="@id/new_bill_activity_id"
-        app:layout_constraintBottom_toBottomOf="@id/new_bill_activity_id"
         android:layout_margin="30dp"
-        app:srcCompat="@drawable/ic_add_new"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="470dp" />
+        android:clickable="true"
+        android:contentDescription="@string/add_bill_row_btn"
+        android:focusable="auto"
+        app:layout_constraintBottom_toBottomOf="@id/new_bill_activity_id"
+        app:layout_constraintEnd_toEndOf="@id/new_bill_activity_id"
+        app:srcCompat="@drawable/ic_add_new" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

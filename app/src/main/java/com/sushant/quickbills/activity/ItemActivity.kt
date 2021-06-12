@@ -19,6 +19,7 @@ import com.sushant.quickbills.R
 import com.sushant.quickbills.data.ITEMS_FIELD
 import com.sushant.quickbills.data.ITEMS_NAME_FIELD
 import com.sushant.quickbills.data.ItemsAdapter
+import com.sushant.quickbills.data.SEARCH_KEY
 import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.pop_up_add_item.view.*
@@ -210,7 +211,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
             override fun onFinish() {
                 val newQuery: Query =
                     Firebase.database.reference.child(ITEMS_FIELD).child(auth.currentUser!!.uid)
-                        .orderByChild("searchKey")
+                        .orderByChild(SEARCH_KEY)
                         .startAt(searchString)
                         .endAt(searchString + "\uf8ff")
                 val newOptions: FirebaseRecyclerOptions<Item> =

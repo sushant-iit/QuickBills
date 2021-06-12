@@ -97,7 +97,7 @@ class SignUpActivity : AppCompatActivity() {
             task ->
             if(task.isSuccessful){
                 Toast.makeText(this, "User Created Successfully", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, LoginActivity::class.java))
+                startActivity(Intent(this, Dashboard::class.java))
                 finish()
             }else{
                 Log.w("Error", "SignUpWithEmailDataBaseWrite:Failure", task.exception)

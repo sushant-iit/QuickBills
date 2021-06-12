@@ -3,8 +3,10 @@ package com.sushant.quickbills.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -17,30 +19,21 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.AutoCompleteCustomerAdapter
-import com.sushant.quickbills.data.CUSTOMERS_FIELD
-import com.sushant.quickbills.data.CUSTOMERS_NAME_FIELD
-import com.sushant.quickbills.data.USER_NAME_FIELD
+import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Customer
-import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.pop_up_choose_customer.view.*
 
 
+@Suppress("LABEL_NAME_CLASH")
 class Dashboard : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var userName: String
     private lateinit var dialogBuilder: AlertDialog.Builder
     private lateinit var dialog: AlertDialog
-
-    //This is done for autocomplete suggestions. For efficiency, I will start listening to the changes
-    //in the dashboard where more likely is that data will not be changed and when we go to customer
-    //and price activity, I will stop listening temporarily when many changes can happen, but on pause,
-    //I can again start listening to decrease bandwidth consumption
-
     private val customerList = arrayListOf<Customer>()
-    private val itemList = arrayListOf<Item>()
+    private var autoCompleteCustomerAdapter : AutoCompleteCustomerAdapter ?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +43,7 @@ class Dashboard : AppCompatActivity() {
         auth = Firebase.auth
         database = Firebase.database.reference
 
-        //Setting up dashboard
+        //Setting up dashboard---------------------------
 
         //User Listener
         val currUserRef = database.child("Users").child(auth.currentUser!!.uid).child(
@@ -68,6 +61,7 @@ class Dashboard : AppCompatActivity() {
         }
         currUserRef.addValueEventListener(userListener)
 
+
         //Customer And Item Listener for autocomplete suggestions and fast response
         val currCustomerRef =
             database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
@@ -80,7 +74,10 @@ class Dashboard : AppCompatActivity() {
                     val customer = child.getValue(Customer::class.java)
                     if (customer != null)
                         customerList.add(customer)
+                    if(autoCompleteCustomerAdapter!=null)
+                        autoCompleteCustomerAdapter!!.notifyDataSetChanged()
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -101,24 +98,93 @@ class Dashboard : AppCompatActivity() {
             val view = layoutInflater.inflate(R.layout.pop_up_choose_customer, null, false)
             val autoCompleteCustomerName = view.choose_customer_name_pop_up
             val customerNumber = view.choose_customer_mobile_pop_up
+            val selectBtn = view.choose_customer_pop_up_button
 
             //Setting up autocomplete suggestions for new bill pop-up
-            val autoCompleteCustomerAdapter =
+            autoCompleteCustomerAdapter =
                 AutoCompleteCustomerAdapter(this, ArrayList(customerList))
+            autoCompleteCustomerAdapter!!.notifyDataSetChanged()
             autoCompleteCustomerName.setAdapter(autoCompleteCustomerAdapter)
             //When user clicks any suggestions, autofill the form
             autoCompleteCustomerName.setOnItemClickListener { _, _, position, _ ->
-                val selectedCustomer = autoCompleteCustomerAdapter.getItem(position)
+                val selectedCustomer = autoCompleteCustomerAdapter?.getItem(position)
                 if (selectedCustomer != null) {
                     autoCompleteCustomerName.setText(selectedCustomer.name)
                     customerNumber.setText(selectedCustomer.number)
                 }
+            }
+            //When customer clicks select, verify that the data is correct and proceed
+            selectBtn.setOnClickListener {
+
+                if (autoCompleteCustomerName.text.toString().trim().isEmpty()) {
+                    autoCompleteCustomerName.error = "Please enter customer's name!!"
+                    autoCompleteCustomerName.requestFocus()
+                    return@setOnClickListener
+                }
+
+                if (!Patterns.PHONE.matcher(customerNumber.text)
+                        .matches() || customerNumber.text.toString().toBigIntegerOrNull() == null
+                ) {
+                    customerNumber.error = "Please enter customer's mobile no!!"
+                    customerNumber.requestFocus()
+                    return@setOnClickListener
+                }
+
+                //Get current user and check and proceed:-
+                Firebase.database.reference.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
+                    .orderByChild(
+                        CUSTOMER_NUMBER_FIED
+                    ).equalTo(customerNumber.text.toString()).get().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            //If no value is returned, means incorrect entry
+                            if (task.result == null || task.result!!.value == null) {
+                                customerNumber.error = "No record found!!"
+                                return@addOnCompleteListener
+                            }
+
+
+                            val retrievedData = task.result!!.value as HashMap<*, *>
+                            val retrievedCustomer =
+                                retrievedData.values.elementAt(0) as HashMap<*, *>
+
+                            //Check for incorrect name
+                            if (!retrievedCustomer[CUSTOMERS_NAME_FIELD]!!.toString()
+                                    .contentEquals(autoCompleteCustomerName.text.toString())
+                            ) {
+                                autoCompleteCustomerName.error = "Typo in the name!!"
+                                return@addOnCompleteListener
+                            }
+                            //If everything is Ok, then send for new bill activity
+                            val intent = Intent(this, NewBillActivity::class.java)
+                            intent.putExtra(
+                                "currCustomerId",
+                                retrievedData.keys.elementAt(0).toString()
+                            )
+                            intent.putExtra(
+                                "currCustomerName",
+                                retrievedCustomer[CUSTOMERS_NAME_FIELD].toString()
+                            )
+                            intent.putExtra(
+                                "currCustomerMobile",
+                                retrievedCustomer[CUSTOMER_NUMBER_FIED].toString()
+                            )
+                            intent.putExtra(
+                                "currCustomerAddress",
+                                retrievedCustomer[CUSTOMER_ADDRESS_FIELD].toString()
+                            )
+                            startActivity(intent)
+                            dialog.dismiss()
+                        } else {
+                            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        }
+                    }
             }
 
             dialogBuilder = AlertDialog.Builder(this).setView(view)
             dialog = dialogBuilder.create()
             dialog.show()
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -2,6 +2,7 @@ package com.sushant.quickbills.activity
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.util.Patterns
 import android.view.Menu
 import android.view.MenuItem
@@ -94,7 +95,9 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                 return@setOnClickListener
             }
 
-            if (!Patterns.PHONE.matcher(customerMobile.text).matches()) {
+            if (!Patterns.PHONE.matcher(customerMobile.text)
+                    .matches() || customerMobile.text.toString().toBigIntegerOrNull() == null
+            ) {
                 customerMobile.error = "Please enter customer's mobile no!!"
                 customerMobile.requestFocus()
                 return@setOnClickListener
@@ -106,27 +109,46 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                 return@setOnClickListener
             }
 
-            val newCustomer = Customer(
-                customerMobile.text.toString(),
-                customerName.text.toString(),
-                customerAddress.text.toString()
-            )
-
-            dialog!!.dismiss()
+            //Checking for uniqueness of mobile number in the database and if it isn't contained, then only add:-
             val database = Firebase.database.reference
-            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
-                .push().setValue(newCustomer).addOnCompleteListener { task ->
-                    if (task.isSuccessful)
-                        Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show()
-                }
-            customersAdapter!!.notifyDataSetChanged()
+            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
+                CUSTOMER_NUMBER_FIED
+            ).equalTo(customerMobile.text.toString()).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result!!.value == null) {
+                        //If everything is fine add customer
+                        val newCustomer = Customer(
+                            customerMobile.text.toString(),
+                            customerName.text.toString(),
+                            customerAddress.text.toString(),
+                            customerName.text.toString().replace(" ", "").lowercase()
+                        )
+                        dialog!!.dismiss()
+                        addCustomerToDatabase(newCustomer, database)
+                    } else
+                        customerMobile.error = "Customer with this mobile no already exists!!"
+
+                } else
+                    Toast.makeText(this, "Something went wrong!!", Toast.LENGTH_SHORT).show()
+
+            }
         }
 
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
         dialog!!.show()
+    }
+
+    private fun addCustomerToDatabase(newCustomer: Customer, database: DatabaseReference) {
+        database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
+            .push().setValue(newCustomer).addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                    Toast.makeText(this, "Customer Added", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this, "Something Went Wrong!!", Toast.LENGTH_SHORT).show()
+                Log.d("Done", "Done")
+            }
+        customersAdapter!!.notifyDataSetChanged()
     }
 
     override fun showEditCustomerPopUp(
@@ -151,7 +173,9 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                 return@setOnClickListener
             }
 
-            if (!Patterns.PHONE.matcher(customerMobile.text).matches()) {
+            if (!Patterns.PHONE.matcher(customerMobile.text)
+                    .matches() || customerMobile.text.toString().toBigIntegerOrNull() == null
+            ) {
                 customerMobile.error = "Please enter customer's mobile no!!"
                 customerMobile.requestFocus()
                 return@setOnClickListener
@@ -163,27 +187,50 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                 return@setOnClickListener
             }
 
-            val newCustomer = Customer(
-                customerMobile.text.toString(),
-                customerName.text.toString(),
-                customerAddress.text.toString()
-            )
+            //Checking for uniqueness of mobile number in the database and if it isn't contained, then only update:-
+            val database = Firebase.database.reference
+            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
+                CUSTOMER_NUMBER_FIED
+            ).equalTo(customerMobile.text.toString()).get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //It might be possible that the current user's name is being updated, in that case, we have to allow update
+                    if (task.result!!.value == null || currCustomer.number.toString()
+                            .contentEquals(customerMobile.text.toString())
+                    ) {
+                        //If everything is fine add customer
+                        val updatedCustomer = Customer(
+                            customerMobile.text.toString(),
+                            customerName.text.toString(),
+                            customerAddress.text.toString(),
+                            customerName.text.toString().replace(" ", "").lowercase()
+                        )
+                        dialog!!.dismiss()
+                        updateCustomerInDatabase(updatedCustomer, customerReference)
+                    } else
+                        customerMobile.error = "Customer with this mobile no already exists!!"
 
-            dialog!!.dismiss()
-            customerReference.setValue(newCustomer).addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                    Toast.makeText(this, "Update Successful", Toast.LENGTH_SHORT).show()
-                else
+                } else
                     Toast.makeText(this, "Something went wrong!!", Toast.LENGTH_SHORT).show()
-                customersAdapter!!.notifyDataSetChanged()
             }
-
         }
 
         dialogBuilder = AlertDialog.Builder(this).setView(view)
         dialog = dialogBuilder!!.create()
         dialog!!.show()
 
+    }
+
+    private fun updateCustomerInDatabase(
+        updatedCustomer: Customer,
+        customerRef: DatabaseReference
+    ) {
+        customerRef.setValue(updatedCustomer).addOnCompleteListener { task ->
+            if (task.isSuccessful)
+                Toast.makeText(this, "Update Successful", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Something went wrong!!", Toast.LENGTH_SHORT).show()
+            customersAdapter!!.notifyDataSetChanged()
+        }
     }
 
     override fun showDeleteCustomerPopUp(
@@ -221,6 +268,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
 
     //Searching Functionality Implementation
     override fun onQueryTextChange(newText: String?): Boolean {
+        val searchString = newText!!.replace(" ", "").lowercase()
         timer?.cancel()
         //Wait for some time after user stops typing
         timer = object : CountDownTimer(1300, 1000) {
@@ -230,8 +278,8 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
             override fun onFinish() {
                 val newQuery: Query = Firebase.database.reference
                     .child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
-                    .orderByChild(USER_NAME_FIELD).startAt(newText)
-                    .endAt(newText + "\uf8ff")
+                    .orderByChild(SEARCH_KEY).startAt(searchString)
+                    .endAt(searchString + "\uf8ff")
                 val newOptions: FirebaseRecyclerOptions<Customer> =
                     FirebaseRecyclerOptions.Builder<Customer>()
                         .setQuery(newQuery, Customer::class.java)

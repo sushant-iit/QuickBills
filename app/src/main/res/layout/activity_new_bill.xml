@@ -67,16 +67,18 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="20dp"
+                android:background="@drawable/background_without_radius"
                 app:cardBackgroundColor="@color/surface"
-                app:cardCornerRadius="@dimen/card_radius"
+                app:cardCornerRadius="@dimen/btn_radius"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/grand_total_value"
-                app:layout_constraintTop_toTopOf="parent" >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_without_radius"
                     android:orientation="vertical">
 
                     <TextView
@@ -145,7 +147,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
+            android:background="@drawable/background_without_radius"
             android:orientation="horizontal"
             android:padding="5dp">
 

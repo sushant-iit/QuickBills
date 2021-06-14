@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choose_new_particular_name_pop_up"
+            android:background="@drawable/background_without_radius"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/choose_new_particular_name_pop_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="5"
+                    android:autofillHints="no"
+                    android:backgroundTint="@color/secondary"
+                    android:dropDownHeight="250dp"
+                    android:completionThreshold="1"
+                    android:elegantTextHeight="true"
+                    android:ems="10"
+                    android:hint="@string/choose_item_name_pop_up_hint"
+                    android:inputType="text"
+                    android:popupBackground="@color/surface"
+                    android:textColor="@color/foreground"
+                    android:textColorHint="@color/text_hint" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/choose_new_particular_qty_pop_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1.5"
+                    android:autofillHints="no"
+                    android:backgroundTint="@color/secondary"
+                    android:dropDownHeight="250dp"
+                    android:completionThreshold="0"
+                    android:elegantTextHeight="true"
+                    android:ems="10"
+                    android:hint="@string/choose_new_particular_qty_pop_up_hint"
+                    android:inputType="number"
+                    android:popupBackground="@color/surface"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/foreground"
+                    android:textColorHint="@color/text_hint" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/qtyPriceAmt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/display_new_particular_rate_pop_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:autofillHints="no"
+                    android:backgroundTint="@color/secondary"
+                    android:elegantTextHeight="true"
+                    android:ems="10"
+                    android:hint="@string/choose_new_particular_rate_pop_up_dummy"
+                    android:popupBackground="@color/surface"
+                    android:textColor="@color/foreground"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/standard_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/display_new_particular_amount_pop_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_weight="1"
+                    android:autofillHints="no"
+                    android:backgroundTint="@color/secondary"
+                    android:elegantTextHeight="true"
+                    android:ems="10"
+                    android:hint="@string/choose_new_particular_amount_pop_up_dummy"
+                    android:popupBackground="@color/surface"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/foreground"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="@dimen/standard_text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/add_new_particular_pop_up_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/add_new_particular_pop_up_button"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

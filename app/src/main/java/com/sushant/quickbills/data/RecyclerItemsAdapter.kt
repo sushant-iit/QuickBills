@@ -10,14 +10,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.sushant.quickbills.R
 import com.sushant.quickbills.model.Item
-import kotlinx.android.synthetic.main.item_row.view.*
+import kotlinx.android.synthetic.main.row_item.view.*
 
-class ItemsAdapter(
+class RecyclerItemsAdapter(
     private val context: Context,
     options: FirebaseRecyclerOptions<Item>,
     private val listener: OnClickListener
 ) :
-    FirebaseRecyclerAdapter<Item, ItemsAdapter.ItemsViewHolder>(options) {
+    FirebaseRecyclerAdapter<Item, RecyclerItemsAdapter.ItemsViewHolder>(options) {
     inner class ItemsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         private val itemName = itemView.item_name_id
@@ -52,7 +52,7 @@ class ItemsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_row, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.row_item, parent, false)
         return ItemsViewHolder(view)
     }
 

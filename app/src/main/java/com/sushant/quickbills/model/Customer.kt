@@ -6,10 +6,11 @@ class Customer() {
     var name: String? = null
     var address: String? = null
     var searchKey : String ?= null
-    constructor(number: String, name: String, address: String, searchKey: String):this(){
+
+    constructor(number: String, name: String, address: String):this(){
         this.number = number
         this.address = address
         this.name = name
-        this.searchKey = searchKey
+        this.searchKey = this.name!!.replace(" ", "").lowercase()
     }
 }

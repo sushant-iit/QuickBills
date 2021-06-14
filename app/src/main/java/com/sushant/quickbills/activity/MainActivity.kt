@@ -5,9 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
+import com.sushant.quickbills.model.Bill
+import com.sushant.quickbills.model.Customer
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         sign_up_btn_id.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
+
     }
 
     override fun onStart() {

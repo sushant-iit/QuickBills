@@ -52,7 +52,7 @@ class Dashboard : AppCompatActivity() {
         val userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userName = snapshot.getValue<String>().toString()
-                user_name_id.text = userName
+                user_name_id.text = userName.split(' ')[0]
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -62,7 +62,7 @@ class Dashboard : AppCompatActivity() {
         currUserRef.addValueEventListener(userListener)
 
 
-        //Customer And Item Listener for autocomplete suggestions and fast response
+        //Customer Listener for autocomplete suggestions and fast response
         val currCustomerRef =
             database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
                 CUSTOMERS_NAME_FIELD
@@ -79,7 +79,6 @@ class Dashboard : AppCompatActivity() {
                 }
 
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.w("Error", "loadCustomerList:onCancelled", error.toException())
             }
@@ -105,6 +104,7 @@ class Dashboard : AppCompatActivity() {
                 AutoCompleteCustomerAdapter(this, ArrayList(customerList))
             autoCompleteCustomerAdapter!!.notifyDataSetChanged()
             autoCompleteCustomerName.setAdapter(autoCompleteCustomerAdapter)
+
             //When user clicks any suggestions, autofill the form
             autoCompleteCustomerName.setOnItemClickListener { _, _, position, _ ->
                 val selectedCustomer = autoCompleteCustomerAdapter?.getItem(position)
@@ -113,6 +113,7 @@ class Dashboard : AppCompatActivity() {
                     customerNumber.setText(selectedCustomer.number)
                 }
             }
+
             //When customer clicks select, verify that the data is correct and proceed
             selectBtn.setOnClickListener {
 

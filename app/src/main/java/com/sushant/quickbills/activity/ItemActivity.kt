@@ -18,23 +18,22 @@ import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
 import com.sushant.quickbills.data.ITEMS_FIELD
 import com.sushant.quickbills.data.ITEMS_NAME_FIELD
-import com.sushant.quickbills.data.ItemsAdapter
+import com.sushant.quickbills.data.RecyclerItemsAdapter
 import com.sushant.quickbills.data.SEARCH_KEY
 import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.pop_up_add_item.view.*
 import kotlinx.android.synthetic.main.pop_up_delete.view.*
 import kotlinx.android.synthetic.main.pop_up_edit_item.view.*
-import kotlinx.android.synthetic.main.item_row.*
 import java.util.*
 
-class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
+class ItemActivity : AppCompatActivity(), RecyclerItemsAdapter.OnClickListener,
     SearchView.OnQueryTextListener {
     private var dialogBuilder: AlertDialog.Builder? = null
     private var dialog: AlertDialog? = null
     private val database = Firebase.database.reference
     private val auth = Firebase.auth
-    private var itemsAdapter: ItemsAdapter? = null
+    private var itemsAdapter: RecyclerItemsAdapter? = null
     private val layoutManager = LinearLayoutManager(this)
     private var timer: CountDownTimer? = null
 
@@ -50,7 +49,7 @@ class ItemActivity : AppCompatActivity(), ItemsAdapter.OnClickListener,
         val options: FirebaseRecyclerOptions<Item> = FirebaseRecyclerOptions.Builder<Item>()
             .setQuery(query, Item::class.java)
             .build()
-        itemsAdapter = ItemsAdapter(this, options, this)
+        itemsAdapter = RecyclerItemsAdapter(this, options, this)
         item_list_recycler_view_id.adapter = itemsAdapter
         item_list_recycler_view_id.layoutManager = layoutManager
 

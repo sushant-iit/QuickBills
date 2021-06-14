@@ -12,14 +12,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.sushant.quickbills.R
 import com.sushant.quickbills.model.Customer
-import kotlinx.android.synthetic.main.customer_row.view.*
+import kotlinx.android.synthetic.main.row_customer.view.*
 
-class CustomersAdapter(
+class RecyclerCustomersAdapter(
     private val context: Context,
     options: FirebaseRecyclerOptions<Customer>,
     private val listener: OnClickListener
 ) :
-    FirebaseRecyclerAdapter<Customer, CustomersAdapter.CustomersViewHolder>(
+    FirebaseRecyclerAdapter<Customer, RecyclerCustomersAdapter.CustomersViewHolder>(
         options
     ) {
 
@@ -60,7 +60,7 @@ class CustomersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomersViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.customer_row, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.row_customer, parent, false)
         return CustomersViewHolder(view)
     }
 

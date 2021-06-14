@@ -27,10 +27,10 @@ import kotlinx.android.synthetic.main.pop_up_delete.view.*
 import kotlinx.android.synthetic.main.pop_up_edit_customer.view.*
 
 
-class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
+class CustomerActivity : AppCompatActivity(), RecyclerCustomersAdapter.OnClickListener,
     SearchView.OnQueryTextListener {
     private val layoutManager = LinearLayoutManager(this)
-    private var customersAdapter: CustomersAdapter? = null
+    private var customersAdapter: RecyclerCustomersAdapter? = null
     private var dialogBuilder: AlertDialog.Builder? = null
     private var dialog: AlertDialog? = null
     private var auth: FirebaseAuth = Firebase.auth
@@ -49,7 +49,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
         val options: FirebaseRecyclerOptions<Customer> = FirebaseRecyclerOptions.Builder<Customer>()
             .setQuery(query, Customer::class.java)
             .build()
-        customersAdapter = CustomersAdapter(this, options, this)
+        customersAdapter = RecyclerCustomersAdapter(this, options, this)
         customer_list_recycler_view_id.adapter = customersAdapter
         customer_list_recycler_view_id.layoutManager = layoutManager
 
@@ -120,8 +120,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                         val newCustomer = Customer(
                             customerMobile.text.toString(),
                             customerName.text.toString(),
-                            customerAddress.text.toString(),
-                            customerName.text.toString().replace(" ", "").lowercase()
+                            customerAddress.text.toString()
                         )
                         dialog!!.dismiss()
                         addCustomerToDatabase(newCustomer, database)
@@ -201,8 +200,7 @@ class CustomerActivity : AppCompatActivity(), CustomersAdapter.OnClickListener,
                         val updatedCustomer = Customer(
                             customerMobile.text.toString(),
                             customerName.text.toString(),
-                            customerAddress.text.toString(),
-                            customerName.text.toString().replace(" ", "").lowercase()
+                            customerAddress.text.toString()
                         )
                         dialog!!.dismiss()
                         updateCustomerInDatabase(updatedCustomer, customerReference)

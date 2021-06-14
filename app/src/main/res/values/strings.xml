@@ -59,7 +59,7 @@
     <string name="delete_icn_content_description">Delete Icon</string>
     <string name="delete_btn_text">Delete</string>
     <string name="log_out_title">Log out</string>
-    <string name="welcome_msg">Hello: Mr. </string>
+    <string name="welcome_msg">Hello: </string>
     <string name="user_name_dummy_text">user_name</string>
     <string name="add_new_customer_btn_description">Add Customer Button</string>
     <string name="add_new_item_btn_description">Add Item Button</string>
@@ -71,4 +71,10 @@
     <string name="choose_customer_pop_up_button">Select Customer</string>
     <string name="autcomplete_name_dummy_text">Name</string>
     <string name="add_bill_row_btn">Add New Item</string>
+    <string name="choose_item_name_pop_up_hint">Item Name</string>
+    <string name="choose_new_particular_qty_pop_up_hint">Qty</string>
+    <string name="add_new_particular_pop_up_button">Proceed</string>
+    <string name="choose_new_particular_rate_pop_up_dummy">Rate</string>
+    <string name="choose_new_particular_amount_pop_up_dummy">Amount</string>
+
 </resources>

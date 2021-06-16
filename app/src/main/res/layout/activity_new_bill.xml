@@ -139,8 +139,7 @@
         android:id="@+id/bill_heading_card"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/particularsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -149,13 +148,15 @@
             android:layout_height="match_parent"
             android:background="@drawable/background_without_radius"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:paddingStart="12dp">
 
             <TextView
                 android:id="@+id/item_name_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2.5"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1.75"
                 android:padding="2dp"
                 android:text="@string/item_name_default_text"
                 android:textColor="@color/foreground"
@@ -166,39 +167,45 @@
                 android:id="@+id/item_price_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1.2"
                 android:padding="2dp"
                 android:text="@string/item_price_default_text"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_qty_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:padding="2dp"
                 android:text="@string/item_quantity_default_text"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_amount_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1.25"
                 android:padding="2dp"
                 android:text="@string/item_amount_default_text"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
+                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/particularsRecyclerView"
         android:layout_width="417dp"
         android:layout_height="504dp"
         app:layout_constraintBottom_toBottomOf="parent"

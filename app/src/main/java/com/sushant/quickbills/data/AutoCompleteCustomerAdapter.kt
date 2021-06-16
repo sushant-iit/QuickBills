@@ -31,7 +31,7 @@ class AutoCompleteCustomerAdapter(context: Context,var customerList: MutableList
 
     //Create the filter
     private val filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
+        override fun performFiltering(constraint:CharSequence?): FilterResults {
             val results = FilterResults()
             val suggestions = arrayListOf<Customer>()
             if (constraint.toString().isNotEmpty()) {

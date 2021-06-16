@@ -1,6 +1,7 @@
 package com.sushant.quickbills.data
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,17 @@ import com.sushant.quickbills.R
 import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.row_auto_complete.view.*
 
-class AutoCompleteItemAdapter(context: Context, var itemList: MutableList<Item>) :
+class AutoCompleteParticularNameAdapter(context: Context,var itemList: MutableList<Item>) :
     ArrayAdapter<Item>(context, 0, itemList) {
     private var itemListFull: MutableList<Item> = ArrayList(itemList)
 
+    override fun getFilter(): Filter {
+        return filter
+
+    }
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+
         val view: View = convertView
             ?: LayoutInflater.from(context).inflate(R.layout.row_auto_complete, parent, false)
         val rowText = view.row_auto_complete_text_id
@@ -24,19 +31,17 @@ class AutoCompleteItemAdapter(context: Context, var itemList: MutableList<Item>)
         return view
     }
 
-    override fun getFilter(): Filter {
-        return filter
-    }
-
     //Create the filter
     private val filter = object : Filter() {
-        override fun performFiltering(constraint: CharSequence?): FilterResults {
+        override fun performFiltering(constraint:CharSequence?): FilterResults {
+            Log.d("sizeYYY", itemListFull.size.toString())
             val results = FilterResults()
             val suggestions = arrayListOf<Item>()
             if (constraint.toString().isNotEmpty()) {
                 val filterPattern = constraint.toString().lowercase().trim()
                 for (item in itemListFull) {
                     val itemName = item.name!!.lowercase().trim()
+                    Log.d("name", itemName)
                     if (itemName.contains(filterPattern))
                         suggestions.add(item)
                 }
@@ -47,6 +52,7 @@ class AutoCompleteItemAdapter(context: Context, var itemList: MutableList<Item>)
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
             itemList.clear()
             if(results!!.count > 0) {
                 //Suppressing as I am sure:
@@ -59,4 +65,5 @@ class AutoCompleteItemAdapter(context: Context, var itemList: MutableList<Item>)
             return (resultValue as Item).name.toString()
         }
     }
+
 }

@@ -76,5 +76,7 @@
     <string name="add_new_particular_pop_up_button">Proceed</string>
     <string name="choose_new_particular_rate_pop_up_dummy">Rate</string>
     <string name="choose_new_particular_amount_pop_up_dummy">Amount</string>
+    <string name="bill_amount_dummy_text">₹ 0.0</string>
+    <string name="amount_text">Amount</string>
 
 </resources>

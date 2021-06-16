@@ -6,7 +6,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bill_item_card"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,9 +41,9 @@
                 android:layout_weight="1.2"
                 android:padding="2dp"
                 android:text="@string/item_price_default_text"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
-                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
@@ -54,9 +54,9 @@
                 android:layout_weight="1"
                 android:padding="2dp"
                 android:text="@string/item_quantity_default_text"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
-                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,9 +67,9 @@
                 android:layout_weight="1.25"
                 android:padding="2dp"
                 android:text="@string/item_amount_default_text"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
-                android:textAlignment="viewEnd"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

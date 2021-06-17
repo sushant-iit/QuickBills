@@ -36,6 +36,7 @@
                     android:autofillHints="no"
                     android:backgroundTint="@color/secondary"
                     android:dropDownHeight="250dp"
+                    android:completionThreshold="1"
                     android:elegantTextHeight="true"
                     android:ems="10"
                     android:hint="@string/choose_item_name_pop_up_hint"

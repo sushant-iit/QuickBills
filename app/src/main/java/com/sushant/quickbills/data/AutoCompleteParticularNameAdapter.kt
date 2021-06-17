@@ -56,6 +56,7 @@ class AutoCompleteParticularNameAdapter(context: Context,var itemList: MutableLi
                 @Suppress("UNCHECKED_CAST")
                 itemList.addAll(results.values as List<Item>)
             }
+            notifyDataSetChanged()
         }
 
         override fun convertResultToString(resultValue: Any?): CharSequence {
@@ -68,7 +69,6 @@ class AutoCompleteParticularNameAdapter(context: Context,var itemList: MutableLi
         for(item in newItemList){
             itemListFull.add(item)
         }
-        this.notifyDataSetChanged()
     }
 
 }

@@ -29,6 +29,7 @@
                 android:autofillHints="no"
                 android:backgroundTint="@color/secondary"
                 android:dropDownHeight="250dp"
+                android:completionThreshold="1"
                 android:elegantTextHeight="true"
                 android:ems="10"
                 android:hint="@string/add_customer_pop_up_hint"

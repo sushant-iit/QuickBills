@@ -1,7 +1,6 @@
 package com.sushant.quickbills.data
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,10 +53,18 @@ class AutoCompleteCustomerAdapter(context: Context,var customerList: MutableList
                 @Suppress("UNCHECKED_CAST")
                 customerList.addAll(results.values as List<Customer>)
             }
+            notifyDataSetChanged()
         }
 
         override fun convertResultToString(resultValue: Any?): CharSequence {
             return (resultValue as Customer).name.toString()
+        }
+    }
+
+    fun updateData(newCustomerList: MutableList<Customer>){
+        customerListFull.clear()
+        for(customer in newCustomerList){
+            customerListFull.add(customer)
         }
     }
 

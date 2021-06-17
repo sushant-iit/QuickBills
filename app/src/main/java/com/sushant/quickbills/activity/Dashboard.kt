@@ -6,6 +6,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,10 +31,10 @@ class Dashboard : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var userName: String
-    private lateinit var dialogBuilder: AlertDialog.Builder
-    private lateinit var dialog: AlertDialog
+    private lateinit var customerDialog: AlertDialog
     private val customerList = arrayListOf<Customer>()
-    private var autoCompleteCustomerAdapter : AutoCompleteCustomerAdapter ?=null
+    private var autoCompleteCustomerAdapter: AutoCompleteCustomerAdapter? = null
+    private lateinit var autoCompleteCustomerName : AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,49 +43,14 @@ class Dashboard : AppCompatActivity() {
         //Initialising Variables
         auth = Firebase.auth
         database = Firebase.database.reference
+        autoCompleteCustomerAdapter =
+            AutoCompleteCustomerAdapter(this, ArrayList(customerList))
+        val view = layoutInflater.inflate(R.layout.pop_up_choose_customer, null, false)
+        autoCompleteCustomerName = view.choose_customer_name_pop_up
+        customerDialog = AlertDialog.Builder(this).setView(view).create()
 
-        //Setting up dashboard---------------------------
-
-        //User Listener
-        val currUserRef = database.child("Users").child(auth.currentUser!!.uid).child(
-            USER_NAME_FIELD
-        )
-        val userListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userName = snapshot.getValue<String>().toString()
-                user_name_id.text = userName.split(' ')[0]
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Error", "loadPost:onCancelled", error.toException())
-            }
-        }
-        currUserRef.addValueEventListener(userListener)
-
-
-        //Customer Listener for autocomplete suggestions and fast response
-        val currCustomerRef =
-            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
-                CUSTOMERS_NAME_FIELD
-            )
-        val customerListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                customerList.clear()
-                for (child in snapshot.children) {
-                    val customer = child.getValue(Customer::class.java)
-                    if (customer != null)
-                        customerList.add(customer)
-                    if(autoCompleteCustomerAdapter!=null)
-                        autoCompleteCustomerAdapter!!.notifyDataSetChanged()
-                }
-
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Error", "loadCustomerList:onCancelled", error.toException())
-            }
-        }
-        currCustomerRef.addValueEventListener(customerListener)
-
+        //Set up Adapters:-
+        autoCompleteCustomerName.setAdapter(autoCompleteCustomerAdapter)
 
         //Setting up click listeners
         customer_card_id.setOnClickListener {
@@ -94,16 +60,8 @@ class Dashboard : AppCompatActivity() {
             startActivity(Intent(this, ItemActivity::class.java))
         }
         new_bill_card_id.setOnClickListener {
-            val view = layoutInflater.inflate(R.layout.pop_up_choose_customer, null, false)
-            val autoCompleteCustomerName = view.choose_customer_name_pop_up
             val customerNumber = view.choose_customer_mobile_pop_up
             val selectBtn = view.choose_customer_pop_up_button
-
-            //Setting up autocomplete suggestions for new bill pop-up
-            autoCompleteCustomerAdapter =
-                AutoCompleteCustomerAdapter(this, ArrayList(customerList))
-            autoCompleteCustomerAdapter!!.notifyDataSetChanged()
-            autoCompleteCustomerName.setAdapter(autoCompleteCustomerAdapter)
 
             //When user clicks any suggestions, autofill the form
             autoCompleteCustomerName.setOnItemClickListener { _, _, position, _ ->
@@ -174,18 +132,60 @@ class Dashboard : AppCompatActivity() {
                                 retrievedCustomer[CUSTOMER_ADDRESS_FIELD].toString()
                             )
                             startActivity(intent)
-                            dialog.dismiss()
+                            customerDialog.dismiss()
                         } else {
                             Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                         }
                     }
             }
-
-            dialogBuilder = AlertDialog.Builder(this).setView(view)
-            dialog = dialogBuilder.create()
-            dialog.show()
+            customerNumber.text = null
+            autoCompleteCustomerName.text = null
+            customerDialog.show()
         }
 
+    }
+
+    //Fetch the data from server and store it:-
+    override fun onStart() {
+
+        //User Listener
+        val currUserRef = database.child("Users").child(auth.currentUser!!.uid).child(
+            USER_NAME_FIELD
+        )
+        val userListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userName = snapshot.getValue<String>().toString()
+                user_name_id.text = userName.split(' ')[0]
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Error", "loadPost:onCancelled", error.toException())
+            }
+        }
+        currUserRef.addValueEventListener(userListener)
+
+        //Customer Listener for autocomplete suggestions and fast response
+        val currCustomerRef =
+            database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
+                CUSTOMERS_NAME_FIELD
+            )
+        val customerListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                customerList.clear()
+                for (child in snapshot.children) {
+                    val customer = child.getValue(Customer::class.java)
+                    if (customer != null)
+                        customerList.add(customer)
+                }
+                autoCompleteCustomerAdapter!!.updateData(customerList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Error", "loadCustomerList:onCancelled", error.toException())
+            }
+        }
+        currCustomerRef.addValueEventListener(customerListener)
+        super.onStart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

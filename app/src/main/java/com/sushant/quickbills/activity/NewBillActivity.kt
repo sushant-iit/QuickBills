@@ -209,20 +209,18 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
             ITEMS_NAME_FIELD
         ).get().addOnCompleteListener { task ->
             if (task.isSuccessful && task.result != null) {
-                runOnUiThread {
-                    itemList.clear()
-                    val data = task.result!!.value as HashMap<*, *>
-                    for (item in data.values) {
-                        val currItem = item as HashMap<*, *>
-                        val newItem = Item(
-                            currItem[ITEMS_NAME_FIELD] as String,
-                            currItem[ITEMS_PRICE_FIELD].toString().toDouble(),
-                            currItem[SEARCH_KEY].toString()
-                        )
-                        itemList.add(newItem)
-                    }
-                    autoCompleteParticularNameAdapter!!.updateData(itemList)
+                itemList.clear()
+                val data = task.result!!.value as HashMap<*, *>
+                for (item in data.values) {
+                    val currItem = item as HashMap<*, *>
+                    val newItem = Item(
+                        currItem[ITEMS_NAME_FIELD] as String,
+                        currItem[ITEMS_PRICE_FIELD].toString().toDouble(),
+                        currItem[SEARCH_KEY].toString()
+                    )
+                    itemList.add(newItem)
                 }
+                autoCompleteParticularNameAdapter!!.updateData(itemList)
             }
         }
         super.onStart()

@@ -3,48 +3,51 @@ package com.sushant.quickbills.activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.AutoCompleteParticularNameAdapter
-import com.sushant.quickbills.data.ITEMS_FIELD
-import com.sushant.quickbills.data.ITEMS_NAME_FIELD
-import com.sushant.quickbills.data.RecyclerParticularsAdapter
+import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Bill
 import com.sushant.quickbills.model.Customer
 import com.sushant.quickbills.model.Item
+import com.sushant.quickbills.utils.isNetworkAvailable
 import kotlinx.android.synthetic.main.activity_new_bill.*
+import kotlinx.android.synthetic.main.pop_up_delete.view.*
+import kotlinx.android.synthetic.main.pop_up_exit_confirm.view.*
 import kotlinx.android.synthetic.main.pop_up_new_particular.view.*
 
 
-class NewBillActivity : AppCompatActivity() {
+@Suppress("LABEL_NAME_CLASH")
+class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var dialogBuilder: AlertDialog.Builder
     private lateinit var dialog: AlertDialog
     private lateinit var database: DatabaseReference
     private val itemList = arrayListOf<Item>()
     private val count = mutableListOf<Int>()
-    var autoCompleteParticularNameAdapter: AutoCompleteParticularNameAdapter? = null
-    lateinit var autoCompleteParticularName: AutoCompleteTextView
-    private lateinit var autoCompleteParticularQty : AutoCompleteTextView
+    private var autoCompleteParticularNameAdapter: AutoCompleteParticularNameAdapter? = null
+    private lateinit var autoCompleteParticularName: AutoCompleteTextView
+    private lateinit var autoCompleteParticularQty: AutoCompleteTextView
     private lateinit var currCustomer: Customer
+    private lateinit var currCustomerId: String
     private lateinit var recyclerParticularsAdapter: RecyclerParticularsAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private val particularList = arrayListOf<Bill.ParticularItem>()
     private var selectedItem: Item? = null
     private var selectedQty: Double? = null
+    private var totalAmount: Double = 0.0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,17 +70,18 @@ class NewBillActivity : AppCompatActivity() {
             intent.extras!!.getString("currCustomerName").toString(),
             intent.extras!!.getString("currCustomerAddress").toString()
         )
+        currCustomerId = intent.extras!!.getString("currCustomerId").toString()
         for (i in 1..100)   //For suggestions in quantity
             count.add(i)
 
         //Setting Up Adapters
-            //for Recycler View
-        recyclerParticularsAdapter = RecyclerParticularsAdapter(this, particularList)
+        //for Recycler View
+        recyclerParticularsAdapter = RecyclerParticularsAdapter(this, particularList, this)
         layoutManager = LinearLayoutManager(this)
         particularsRecyclerView.layoutManager = layoutManager
         particularsRecyclerView.adapter = recyclerParticularsAdapter
         recyclerParticularsAdapter.notifyDataSetChanged()
-            //for Quantity
+        //for Quantity
         val autoCompleteParticularQtyAdapter =
             ArrayAdapter(
                 this,
@@ -86,6 +90,11 @@ class NewBillActivity : AppCompatActivity() {
                 count
             )
         autoCompleteParticularQty.setAdapter(autoCompleteParticularQtyAdapter)
+        //for autoCompleteParticularName
+        //Setting Empty for now.. will be initialized once the data is available
+        autoCompleteParticularNameAdapter =
+            AutoCompleteParticularNameAdapter(this, arrayListOf())
+        autoCompleteParticularName.setAdapter(autoCompleteParticularNameAdapter)
         //------------------------------------------------------------------------------------------
 
         //Setting up the view:
@@ -137,7 +146,7 @@ class NewBillActivity : AppCompatActivity() {
 
             //When user clicks any item suggestions, autofill the form and disable the input
             autoCompleteParticularName.setOnItemClickListener { _, _, position, _ ->
-                if(autoCompleteParticularNameAdapter!=null)
+                if (autoCompleteParticularNameAdapter != null)
                     selectedItem = autoCompleteParticularNameAdapter?.getItem(position)!!
                 if (this.selectedItem != null) {
                     autoCompleteParticularName.isEnabled = false
@@ -176,6 +185,8 @@ class NewBillActivity : AppCompatActivity() {
                     amount
                 )
                 particularList.add(newParticularItem)
+                totalAmount += amount
+                bill_amount.text = getString(R.string.rupee, totalAmount)
                 recyclerParticularsAdapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
@@ -194,30 +205,98 @@ class NewBillActivity : AppCompatActivity() {
 
     override fun onStart() {
         //Get all the data from the server on start
-        val currItemRef =
-            database.child(ITEMS_FIELD).child(auth.currentUser!!.uid).orderByChild(
-                ITEMS_NAME_FIELD
-            )
-        val itemListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        database.child(ITEMS_FIELD).child(auth.currentUser!!.uid).orderByChild(
+            ITEMS_NAME_FIELD
+        ).get().addOnCompleteListener { task ->
+            if (task.isSuccessful && task.result != null) {
                 runOnUiThread {
                     itemList.clear()
-                    for (child in snapshot.children) {
-                        val item = child.getValue(Item::class.java)
-                        if (item != null)
-                            itemList.add(item)
+                    val data = task.result!!.value as HashMap<*, *>
+                    for (item in data.values) {
+                        val currItem = item as HashMap<*, *>
+                        val newItem = Item(
+                            currItem[ITEMS_NAME_FIELD] as String,
+                            currItem[ITEMS_PRICE_FIELD].toString().toDouble(),
+                            currItem[SEARCH_KEY].toString()
+                        )
+                        itemList.add(newItem)
                     }
-                    autoCompleteParticularNameAdapter =
-                        AutoCompleteParticularNameAdapter(this@NewBillActivity, ArrayList(itemList))
-                    autoCompleteParticularName.setAdapter(autoCompleteParticularNameAdapter)
+                    autoCompleteParticularNameAdapter!!.updateData(itemList)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Error", "loadItemList:onCancelled", error.toException())
-            }
         }
-        currItemRef.addListenerForSingleValueEvent(itemListener)
         super.onStart()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.new_bill_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //For saving the bill:
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.save_bill) {
+            val newBill = Bill(
+                currCustomer,
+                currCustomerId,
+                ServerValue.TIMESTAMP,
+                particularList,
+                totalAmount
+            )
+            database.child(BILLS_FIELD).child(auth.currentUser!!.uid).push()
+                .setValue(newBill).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Bill created successfully...", Toast.LENGTH_LONG)
+                            .show()
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Failure: Bill Creation", Toast.LENGTH_LONG).show()
+                    }
+                }
+            if (!isNetworkAvailable(this)) {
+                Toast.makeText(this, "Network not available...", Toast.LENGTH_SHORT)
+                    .show()
+                Toast.makeText(
+                    this,
+                    "Bill created locally! Sync when available",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //Checking once for confirmation before exit so that user doesn't accidentally lose the data:
+    override fun onBackPressed() {
+        val view = layoutInflater.inflate(R.layout.pop_up_exit_confirm, null, false)
+        val exitDialog = AlertDialog.Builder(this).setView(view).create()
+        val exitBtn = view.exit_pop_up_btn_id
+        exitDialog.show()
+        exitBtn.setOnClickListener {
+            exitDialog.dismiss()
+            finish()
+        }
+    }
+
+    override fun deleteParticular(position: Int) {
+        val view = layoutInflater.inflate(R.layout.pop_up_delete, null, false)
+        val deleteDialog = AlertDialog.Builder(this).setView(view).create()
+        val deleteBtn = view.proceed_delete_pop_up_btn_id
+        val cancelBtn = view.cancel_delete_pop_up_btn_id
+        deleteBtn.setOnClickListener {
+            val particularAmountToBeDeleted = particularList[position].itemAmount
+            totalAmount -= particularAmountToBeDeleted
+            bill_amount.text = getString(R.string.rupee, totalAmount)
+            particularList.removeAt(position)
+            recyclerParticularsAdapter.notifyDataSetChanged()
+            deleteDialog.dismiss()
+        }
+        cancelBtn.setOnClickListener {
+            deleteDialog.dismiss()
+        }
+        deleteDialog.show()
+    }
+
 }

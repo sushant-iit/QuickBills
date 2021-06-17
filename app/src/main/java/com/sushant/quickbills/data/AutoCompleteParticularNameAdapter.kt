@@ -1,7 +1,6 @@
 package com.sushant.quickbills.data
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,14 +33,12 @@ class AutoCompleteParticularNameAdapter(context: Context,var itemList: MutableLi
     //Create the filter
     private val filter = object : Filter() {
         override fun performFiltering(constraint:CharSequence?): FilterResults {
-            Log.d("sizeYYY", itemListFull.size.toString())
             val results = FilterResults()
             val suggestions = arrayListOf<Item>()
             if (constraint.toString().isNotEmpty()) {
                 val filterPattern = constraint.toString().lowercase().trim()
                 for (item in itemListFull) {
                     val itemName = item.name!!.lowercase().trim()
-                    Log.d("name", itemName)
                     if (itemName.contains(filterPattern))
                         suggestions.add(item)
                 }
@@ -64,6 +61,14 @@ class AutoCompleteParticularNameAdapter(context: Context,var itemList: MutableLi
         override fun convertResultToString(resultValue: Any?): CharSequence {
             return (resultValue as Item).name.toString()
         }
+    }
+
+    fun updateData(newItemList: MutableList<Item>){
+        itemListFull.clear()
+        for(item in newItemList){
+            itemListFull.add(item)
+        }
+        this.notifyDataSetChanged()
     }
 
 }

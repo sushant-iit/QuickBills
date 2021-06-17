@@ -78,5 +78,10 @@
     <string name="choose_new_particular_amount_pop_up_dummy">Amount</string>
     <string name="bill_amount_dummy_text">₹ 0.0</string>
     <string name="amount_text">Amount</string>
-
+    <string name="rupee">₹ %1$.1f</string>
+    <string name="save_title">Save</string>
+    <string name="exit_icn_content_description">Exit Icon</string>
+    <string name="exit_msg">Want to discard all data and exit?</string>
+    <string name="cancel_exit_btn_text">No</string>
+    <string name="exit_btn_text">Yes</string>
 </resources>

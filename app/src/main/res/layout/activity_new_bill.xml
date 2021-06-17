@@ -135,7 +135,7 @@
                 android:id="@+id/item_amount_heading"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1.25"
                 android:padding="2dp"
                 android:text="@string/item_amount_default_text"

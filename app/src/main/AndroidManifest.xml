@@ -10,6 +10,8 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+        <activity android:name=".activity.AllBillsActivity"
+            android:label="All Bills"></activity>
         <activity
             android:name=".activity.NewBillActivity"
             android:label="New Bill" />

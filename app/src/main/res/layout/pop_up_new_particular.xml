@@ -40,7 +40,7 @@
                     android:elegantTextHeight="true"
                     android:ems="10"
                     android:hint="@string/choose_item_name_pop_up_hint"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="textFilter"
                     android:popupBackground="@color/surface"
                     android:textColor="@color/foreground"
                     android:dropDownAnchor="@id/choose_new_particular_name_pop_up"
@@ -71,7 +71,6 @@
 
 
             <LinearLayout
-                android:id="@+id/qtyPriceAmt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

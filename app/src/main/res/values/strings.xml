@@ -14,7 +14,6 @@
     <string name="old_bills_text">All Bills</string>
     <string name="sales_text">My Sales</string>
     <string name="my_account">My Account</string>
-    <string name="new_customer_default_text">New Customer</string>
     <string name="search_customer_text">Search</string>
     <string name="add_customer_icon">New Customer Icon</string>
     <string name="customer_name_textview">Customer Name</string>
@@ -27,8 +26,6 @@
     <string name="add_customer_mob_pop_up_hint">Mobile</string>
     <string name="add_customer_address_pop_up_hint">Address</string>
     <string name="add_customer_pop_up_button">Add Customer</string>
-    <string name="add_new_price_icon">Add new item to stock icon</string>
-    <string name="new_price_default_text">Add New Item</string>
     <string name="item_icon_description">Price Icon</string>
     <string name="item_name_textview">Item Name</string>
     <string name="item_price_dummy_text">$506.20</string>
@@ -44,16 +41,10 @@
     <string name="user_name_hint">Your Good Name:</string>
     <string name="edit_customer_icon">Edit Customer Icon</string>
     <string name="edit_customer_pop_up_button">Update Customer</string>
-    <string name="item_name_dummy_text">Item Name</string>
     <string name="item_name_default_text">Item Name </string>
     <string name="item_price_default_text">Price</string>
     <string name="item_quantity_default_text">Qty</string>
     <string name="item_amount_default_text">Amount</string>
-    <string name="grand_total_heading">Grand Total:</string>
-    <string name="grand_total_dummy_text">100000</string>
-    <string name="customer_details_heading">Customer Details:</string>
-    <string name="customer_mobile_text_view">Customer Mobile</string>
-    <string name="customer_address_textView">Customer Address</string>
     <string name="delete_msg">Are you sure to delete this item?</string>
     <string name="cancel_delete_btn_text">Cancel</string>
     <string name="delete_icn_content_description">Delete Icon</string>
@@ -80,8 +71,11 @@
     <string name="amount_text">Amount</string>
     <string name="rupee">₹ %1$.1f</string>
     <string name="save_title">Save</string>
-    <string name="exit_icn_content_description">Exit Icon</string>
     <string name="exit_msg">Want to discard all data and exit?</string>
-    <string name="cancel_exit_btn_text">No</string>
     <string name="exit_btn_text">Yes</string>
+    <string name="delete_bill_icon_description">Delete Bill Icon</string>
+    <string name="purchase_time_dummy_text">00:00</string>
+    <string name="print_pdf_icon_description">Print as PDF</string>
+    <string name="purchase_amount_dummy_text">₹ 1000</string>
+    <string name="row_date_dummy_text">27 Jul 2000</string>
 </resources>

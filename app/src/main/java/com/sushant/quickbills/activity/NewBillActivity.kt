@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
@@ -237,7 +236,7 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
             val newBill = Bill(
                 currCustomer,
                 currCustomerId,
-                ServerValue.TIMESTAMP,
+                -System.currentTimeMillis(), //Negation as I want data to be sorted in reverse
                 particularList,
                 totalAmount
             )
@@ -285,7 +284,9 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
         val cancelBtn = view.cancel_delete_pop_up_btn_id
         deleteBtn.setOnClickListener {
             val particularAmountToBeDeleted = particularList[position].itemAmount
-            totalAmount -= particularAmountToBeDeleted
+            if (particularAmountToBeDeleted != null) {
+                totalAmount -= particularAmountToBeDeleted
+            }
             bill_amount.text = getString(R.string.rupee, totalAmount)
             particularList.removeAt(position)
             recyclerParticularsAdapter.notifyDataSetChanged()

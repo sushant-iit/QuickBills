@@ -5,73 +5,97 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/particular_item_card"
-        android:layout_width="match_parent"
+        android:id="@+id/bill_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/surface"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="0dp"
+            android:background="@color/surface">
+
+            <ImageView
+                android:id="@+id/print_bill_id"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                android:layout_toStartOf="@id/delete_bill_id"
+                android:contentDescription="@string/print_pdf_icon_description"
+                app:srcCompat="@drawable/ic_print_pdf" />
 
             <TextView
-                android:id="@+id/particular_name"
-                android:layout_width="0dp"
+                android:id="@+id/customer_name_id"
+                android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1.75"
-                android:padding="2dp"
-                android:text="@string/item_name_default_text"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="@string/customer_name_textview"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/particular_price"
-                android:layout_width="0dp"
+                android:id="@+id/customer_mobile_id"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1.2"
-                android:padding="2dp"
-                android:text="@string/item_price_default_text"
-                android:textAlignment="viewEnd"
+                android:layout_below="@id/customer_name_id"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="0dp"
+                android:text="@string/customer_mobile_dummy_text"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/particular_qty"
-                android:layout_width="0dp"
+                android:id="@+id/purchase_time_id"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:padding="2dp"
-                android:text="@string/item_quantity_default_text"
-                android:textAlignment="viewEnd"
+                android:layout_below="@id/customer_mobile_id"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/purchase_time_dummy_text"
                 android:textColor="@color/foreground"
                 android:textSize="@dimen/standard_text_size"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/particular_amount"
-                android:layout_width="0dp"
+                android:id="@+id/purchase_amount_id"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1.25"
-                android:padding="2dp"
-                android:text="@string/item_amount_default_text"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/foreground"
-                android:textSize="@dimen/standard_text_size"
+                android:layout_below="@id/print_bill_id"
+                android:layout_alignEnd="@id/delete_bill_id"
+                android:layout_margin="10dp"
+                android:text="@string/purchase_amount_dummy_text"
+                android:textColor="@color/secondary"
+                android:textSize="24sp"
                 android:textStyle="bold" />
-        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/delete_bill_id"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:contentDescription="@string/delete_bill_icon_description"
+                app:srcCompat="@drawable/ic_outline_delete_forever_24" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

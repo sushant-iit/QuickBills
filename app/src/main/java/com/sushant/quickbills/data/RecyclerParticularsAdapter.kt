@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.sushant.quickbills.model.Bill
 import androidx.recyclerview.widget.RecyclerView
 import com.sushant.quickbills.R
-import kotlinx.android.synthetic.main.row_bill.view.*
+import kotlinx.android.synthetic.main.row_particular.view.*
 
 class RecyclerParticularsAdapter(
     private val context: Context,
@@ -41,7 +41,7 @@ class RecyclerParticularsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticularsViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.row_bill, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.row_particular, parent, false)
         return ParticularsViewHolder(view)
     }
 

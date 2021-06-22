@@ -5,4 +5,5 @@
     <color name="secondary">#00dec0</color>
     <color name="foreground">#FFFFFF</color>
     <color name="text_hint">#CFCFCF</color>
+    <color name="dark_surface"> #202020</color>
 </resources>

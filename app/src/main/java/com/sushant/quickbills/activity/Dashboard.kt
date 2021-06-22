@@ -1,6 +1,7 @@
 package com.sushant.quickbills.activity
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -10,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -39,6 +41,9 @@ class Dashboard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        //Set up bottom navigation bar color
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.dark_surface)
 
         //Initialising Variables
         auth = Firebase.auth
@@ -77,7 +82,6 @@ class Dashboard : AppCompatActivity() {
 
             //When customer clicks select, verify that the data is correct and proceed
             selectBtn.setOnClickListener {
-
                 if (autoCompleteCustomerName.text.toString().trim().isEmpty()) {
                     autoCompleteCustomerName.error = "Please enter customer's name!!"
                     autoCompleteCustomerName.requestFocus()
@@ -204,6 +208,16 @@ class Dashboard : AppCompatActivity() {
             finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    //Handling views on screen rotation
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        Log.d("Triggered:", "true")
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            mflow.setMaxElementsWrap(3)
+        else
+            mflow.setMaxElementsWrap(2)
+        super.onConfigurationChanged(newConfig)
     }
 
 }

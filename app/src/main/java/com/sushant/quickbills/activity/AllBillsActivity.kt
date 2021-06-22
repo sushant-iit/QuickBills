@@ -1,6 +1,7 @@
 package com.sushant.quickbills.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
@@ -17,12 +18,12 @@ import com.sushant.quickbills.model.ListItem
 import kotlinx.android.synthetic.main.activity_all_bills.*
 import java.text.DateFormat
 import java.util.*
-import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashMap
 
 class AllBillsActivity : AppCompatActivity() {
     private val database = Firebase.database.reference
     private val auth = Firebase.auth
-    private val billsAtDate : HashMap<String, ArrayList<Bill>> = HashMap()
+    private val billsAtDate : LinkedHashMap<String, ArrayList<Bill>> = LinkedHashMap()
     private val consolidatedList = arrayListOf<ListItem>()
     private val layoutManager = LinearLayoutManager(this)
     private val recyclerBillsAdapter = RecyclerBillsAdapter(this, consolidatedList)
@@ -81,6 +82,7 @@ class AllBillsActivity : AppCompatActivity() {
             for(bills in billsAtDate[date]!!)
                 consolidatedList.add(bills)
         }
+        Log.d("keys",billsAtDate.keys.toString())
         recyclerBillsAdapter.notifyDataSetChanged()
     }
 }

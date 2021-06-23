@@ -10,20 +10,21 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
-        <activity android:name=".activity.AllBillsActivity"
-            android:label="All Bills"></activity>
+        android:theme="@style/Theme.App">
         <activity
             android:name=".activity.NewBillActivity"
-            android:label="New Bill" />
-        <activity android:name=".activity.SignUpActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity
-            android:name=".activity.ItemActivity"
-            android:label="Item Prices" />
+            android:label="New Bill"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CustomerActivity"
             android:label="Customers" />
+        <activity
+            android:name=".activity.ItemActivity"
+            android:label="Item Prices" />
+        <activity android:name=".activity.AllBillsActivity"
+            android:label="All Bills"></activity>
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.Dashboard"
             android:windowSoftInputMode="adjustNothing"
@@ -31,6 +32,7 @@
             android:label="@string/dashboard_title" />
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/Theme.Launcher"
             android:label="Quick Bills">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

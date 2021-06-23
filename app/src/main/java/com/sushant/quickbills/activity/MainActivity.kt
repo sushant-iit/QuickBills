@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Reset to window mde from full screen mode in splash screen to main activity
+        setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

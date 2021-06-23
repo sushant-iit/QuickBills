@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.Launcher" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@color/background</item>
+    </style>
+</resources>

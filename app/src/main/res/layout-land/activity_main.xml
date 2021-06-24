@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
+        android:layout_width="290dp"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:contentDescription="@string/email_icn_description"
-        app:layout_constraintBottom_toTopOf="@+id/welcome_text_id"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_all_bills" />
@@ -26,29 +26,29 @@
         android:textColor="@color/foreground"
         android:textSize="@dimen/dashboard_text"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/welcome_text_id2"
+        app:layout_constraintBottom_toTopOf="@+id/log_in_btn_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/welcome_text_id2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
         android:text="@string/welcome_text_2"
         android:textColor="@color/foreground"
         android:textSize="@dimen/dashboard_text"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/log_in_btn_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_text_id" />
 
     <Button
         android:id="@+id/log_in_btn_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/secondary"
         android:text="@string/log_in_text"
@@ -56,21 +56,21 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/sign_up_btn_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
     <Button
         android:id="@+id/sign_up_btn_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="65dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/secondary"
         android:text="@string/sign_up_text"
         android:textAllCaps="true"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

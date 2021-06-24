@@ -3,10 +3,13 @@ package com.sushant.quickbills.model
 
 class Bill() : ListItem() {
     var customerDetails : Customer ?= null
-    var customerId : String ?= null
+    private var customerId : String ?= null
     var purchasedAt : Long?= null
     var particulars : ArrayList <ParticularItem>? = null
     var totalAmount : Double?=null
+
+    @Transient
+    var key: String? = null
 
     constructor(customerDetails: Customer,customerId: String, purchasedAt: Long, particulars: ArrayList<ParticularItem>, totalAmount: Double) : this() {
         this.customerDetails = customerDetails

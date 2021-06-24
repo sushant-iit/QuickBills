@@ -7,39 +7,53 @@
         android:allowBackup="true"
         android:icon="@mipmap/quick_bills_solid_rounded_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
+        <activity android:name=".activity.SignUpActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity.NewBillActivity"
             android:label="New Bill"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CustomerActivity"
             android:label="Customers" />
         <activity
             android:name=".activity.ItemActivity"
             android:label="Item Prices" />
-        <activity android:name=".activity.AllBillsActivity"
+        <activity
+            android:name=".activity.AllBillsActivity"
             android:label="All Bills"></activity>
-        <activity android:name=".activity.SignUpActivity" />
-        <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.Dashboard"
-            android:windowSoftInputMode="adjustNothing"
             android:configChanges="orientation|screenSize"
-            android:label="@string/dashboard_title" />
+            android:label="@string/dashboard_title"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/Theme.Launcher"
-            android:label="Quick Bills">
+            android:label="Quick Bills"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/Theme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sushant.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
 
         <meta-data
             android:name="preloaded_fonts"

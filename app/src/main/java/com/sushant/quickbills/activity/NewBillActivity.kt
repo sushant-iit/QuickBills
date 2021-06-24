@@ -21,7 +21,7 @@ import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Bill
 import com.sushant.quickbills.model.Customer
 import com.sushant.quickbills.model.Item
-import com.sushant.quickbills.utils.createBillPDF
+import com.sushant.quickbills.utils.createOrShowBillPDF
 import com.sushant.quickbills.utils.isNetworkAvailable
 import kotlinx.android.synthetic.main.activity_new_bill.*
 import kotlinx.android.synthetic.main.pop_up_delete.view.*
@@ -246,6 +246,8 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Bill created successfully...", Toast.LENGTH_LONG)
                             .show()
+                        //Create the pdf of generated bill
+                        createOrShowBillPDF(this, newBill)
                         finish()
                     } else {
                         Toast.makeText(this, "Failure: Bill Creation", Toast.LENGTH_LONG).show()
@@ -262,8 +264,6 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
                     .show()
                 finish()
             }
-            //Create the pdf of generated bill
-            createBillPDF(this, newBill)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -1,8 +1,11 @@
 package com.sushant.quickbills.utils
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.os.Environment
 import android.util.Log
+import androidx.core.content.FileProvider
 import com.itextpdf.kernel.colors.DeviceRgb
 import com.itextpdf.kernel.geom.PageSize
 import com.itextpdf.kernel.pdf.PdfDocument
@@ -19,12 +22,21 @@ import java.io.File
 import java.io.FileNotFoundException
 
 
-fun createBillPDF(context: Context, bill: Bill) {
+fun createOrShowBillPDF(context: Context, bill: Bill) {
     val storagePath = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
     val fileName = bill.customerDetails!!.number + "T" + billCreationDateAndTime(bill)
+    //If bill PDF is already generated .. then directly show:
     val file = File(storagePath, "${fileName}.pdf")
     if(!file.exists())
         generatePDF(bill, file)
+    //After generation redirect to pdf reader for viewing the bill
+    if(file.exists()){
+        val data = FileProvider.getUriForFile(context, "com.sushant.fileProvider", file)
+        val viewPDFIntent = Intent(Intent.ACTION_VIEW)
+        viewPDFIntent.flags = FLAG_GRANT_READ_URI_PERMISSION
+        viewPDFIntent.setDataAndType(data, "application/pdf")
+        context.startActivity(viewPDFIntent)
+    }
 }
 
 private fun generatePDF(bill: Bill, file:File){

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.sushant.quickbills.R
@@ -17,7 +18,8 @@ import java.util.*
 
 class RecyclerBillsAdapter(
     private val context: Context,
-    private val consolidateList: ArrayList<ListItem>
+    private val consolidateList: ArrayList<ListItem>,
+    private val listener : OnClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -69,14 +71,33 @@ class RecyclerBillsAdapter(
     }
 
     //Create separate viewHolders for both
-    class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val billDate = itemView.date_id!!
     }
 
-    class BillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BillViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val billCustomerName: TextView = itemView.customer_name_id
         val billAmount: TextView = itemView.purchase_amount_id
         val billCustomerMob: TextView = itemView.customer_mobile_id
         val billCreateTime: TextView = itemView.purchase_time_id
+        private val printBtn: ImageView = itemView.print_bill_id
+        private val deleteBtn : ImageView = itemView.delete_bill_id
+
+        init {
+            printBtn.setOnClickListener(this)
+            deleteBtn.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            when(v!!.id){
+                R.id.print_bill_id-> listener.printPDF(consolidateList[adapterPosition] as Bill)
+                R.id.delete_bill_id->listener.deleteBill((consolidateList[adapterPosition] as Bill).key.toString())
+            }
+        }
+    }
+
+    interface OnClickListener{
+        fun printPDF(bill: Bill)
+        fun deleteBill(key : String)
     }
 }

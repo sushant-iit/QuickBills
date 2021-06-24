@@ -1,7 +1,8 @@
 package com.sushant.quickbills.activity
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
@@ -11,23 +12,27 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.*
+import com.sushant.quickbills.data.BILLS_FIELD
+import com.sushant.quickbills.data.BILLS_TIME_FIELD
+import com.sushant.quickbills.data.RecyclerBillsAdapter
 import com.sushant.quickbills.model.Bill
 import com.sushant.quickbills.model.DateItem
 import com.sushant.quickbills.model.ListItem
+import com.sushant.quickbills.utils.createOrShowBillPDF
 import kotlinx.android.synthetic.main.activity_all_bills.*
+import kotlinx.android.synthetic.main.pop_up_delete.view.*
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.LinkedHashMap
 
-class AllBillsActivity : AppCompatActivity() {
+class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListener {
     private val database = Firebase.database.reference
     private val auth = Firebase.auth
-    private val billsAtDate : LinkedHashMap<String, ArrayList<Bill>> = LinkedHashMap()
+    private val billsAtDate: LinkedHashMap<String, ArrayList<Bill>> = LinkedHashMap()
     private val consolidatedList = arrayListOf<ListItem>()
     private val layoutManager = LinearLayoutManager(this)
-    private val recyclerBillsAdapter = RecyclerBillsAdapter(this, consolidatedList)
-
+    private val recyclerBillsAdapter = RecyclerBillsAdapter(this, consolidatedList, this)
+    private lateinit var dialog: AlertDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,21 +48,23 @@ class AllBillsActivity : AppCompatActivity() {
     //Retrieve the data from the database and store it in the hashmap according to the parameter
     override fun onStart() {
         val currBillsRef = database.child(BILLS_FIELD).child(auth.currentUser!!.uid).orderByChild(
-            BILLS_TIME_FIELD)
+            BILLS_TIME_FIELD
+        )
         super.onStart()
-        val billListener = object : ValueEventListener{
+        val billListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 billsAtDate.clear()
-                for(child in snapshot.children){
+                for (child in snapshot.children) {
                     val currBill = child.getValue(Bill::class.java)
+                    currBill!!.key = child.key
                     //convert time to date format
                     //Negative sign as curr time is store as negative long for decreasing order
-                    val dateObj = Date(-currBill!!.purchasedAt!!.toLong())
+                    val dateObj = Date(-currBill.purchasedAt!!.toLong())
                     val dateString = DateFormat.getDateInstance(DateFormat.MEDIUM).format(dateObj)
                     //Add data to the hashmap
-                    if(billsAtDate.containsKey(dateString))
+                    if (billsAtDate.containsKey(dateString))
                         billsAtDate[dateString]!!.add(currBill)
-                    else{
+                    else {
                         val newArrayList = arrayListOf(currBill)
                         billsAtDate[dateString] = newArrayList
                     }
@@ -74,15 +81,43 @@ class AllBillsActivity : AppCompatActivity() {
     }
 
     //Consolidated list is passed to recycler view for rendering
-    fun updateConsolidatedList(){
+    fun updateConsolidatedList() {
         consolidatedList.clear()
-        for(date in billsAtDate.keys){
+        for (date in billsAtDate.keys) {
             val dateItem = DateItem(date)
             consolidatedList.add(dateItem)
-            for(bills in billsAtDate[date]!!)
+            for (bills in billsAtDate[date]!!)
                 consolidatedList.add(bills)
         }
-        Log.d("keys",billsAtDate.keys.toString())
         recyclerBillsAdapter.notifyDataSetChanged()
+    }
+
+    override fun printPDF(bill: Bill) {
+        createOrShowBillPDF(this, bill)
+    }
+
+    override fun deleteBill(key: String) {
+        val view = layoutInflater.inflate(R.layout.pop_up_delete, null, false)
+        val cancelDelBtn = view.cancel_delete_pop_up_btn_id
+        val proceedDelBtn = view.proceed_delete_pop_up_btn_id
+
+        cancelDelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        proceedDelBtn.setOnClickListener {
+            database.child(BILLS_FIELD).child(auth.currentUser!!.uid).child(key).removeValue()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                        Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+        }
+
+        dialog = AlertDialog.Builder(this).setView(view).create()
+        dialog.show()
     }
 }

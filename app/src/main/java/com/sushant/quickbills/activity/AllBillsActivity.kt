@@ -50,10 +50,10 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
 
     //Retrieve the data from the database and store it in the hashmap according to the parameter
     override fun onStart() {
+        super.onStart()
         val currBillsRef = database.child(BILLS_FIELD).child(auth.currentUser!!.uid).orderByChild(
             BILLS_TIME_FIELD
         )
-        super.onStart()
         val billListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 billsAtDate.clear()

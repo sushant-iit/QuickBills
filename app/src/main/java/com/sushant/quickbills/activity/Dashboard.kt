@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
 import com.sushant.quickbills.data.*
@@ -150,23 +149,6 @@ class Dashboard : AppCompatActivity() {
 
     //Fetch the data from server and store it:-
     override fun onStart() {
-
-        //User Listener
-        val currUserRef = database.child("Users").child(auth.currentUser!!.uid).child(
-            USER_NAME_FIELD
-        )
-        val userListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userName = snapshot.getValue<String>().toString()
-                user_name_id.text = userName.split(' ')[0]
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Error", "loadPost:onCancelled", error.toException())
-            }
-        }
-        currUserRef.addValueEventListener(userListener)
-
         //Customer Listener for autocomplete suggestions and fast response
         val currCustomerRef =
             database.child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid).orderByChild(
@@ -189,6 +171,12 @@ class Dashboard : AppCompatActivity() {
         }
         currCustomerRef.addValueEventListener(customerListener)
         super.onStart()
+    }
+
+    override fun onResume() {
+        userName = auth.currentUser!!.displayName.toString().split(" ")[0]
+        user_name_id.text = userName
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -102,9 +102,7 @@
                 android:textColor="@color/secondary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                tools:targetApi="m"
-                tools:ignore="UnusedAttribute" />
+                android:visibility="gone" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

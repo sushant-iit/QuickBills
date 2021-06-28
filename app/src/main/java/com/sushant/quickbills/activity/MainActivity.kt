@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         //If the user is already logged-in, take him directly to the dashboard:
         auth = Firebase.auth
-        if (auth.currentUser != null) {
+        if (auth.currentUser != null && auth.currentUser!!.isEmailVerified) {
             startActivity(Intent(this, Dashboard::class.java))
             finish()
         }

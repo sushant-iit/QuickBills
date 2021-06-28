@@ -1,18 +1,17 @@
 package com.sushant.quickbills.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
@@ -72,36 +71,38 @@ class SignUpActivity : AppCompatActivity() {
         sign_up_in_proceed_btn.isEnabled = false
         sign_up_in_proceed_btn.isClickable = false
 
-        //Creating now actual user and saving to the database
+        //Creating now actual user
         auth.createUserWithEmailAndPassword(
             userEmail, userPassword
         ).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                //This function inserts user into database and returns true if database insertion
-                //is done properly. If not, we have to remove the user
-                val currUser = HashMap<String, Any>()
-                currUser[USER_NAME_FIELD] = userName
-                currUser[USER_EMAIL_ID_FIELD] = userEmail
-                insertIntoDataBase(auth.currentUser!!.uid, currUser)
-            } else {
-                Log.w("Error", "SignUpWithEmail:Failure", task.exception)
-                Toast.makeText(this, "Authentication Failed", Toast.LENGTH_LONG).show()
-                sign_up_in_proceed_btn.isEnabled = true
-                sign_up_in_proceed_btn.isClickable = true
-            }
-        }
-    }
+                val user = auth.currentUser
+                //Set user profile
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setDisplayName(userName).build()
+                user!!.updateProfile(profileUpdates).addOnCompleteListener {
+                    profile_update_task->
+                    if(profile_update_task.isSuccessful){
+                        //For preventing garbage users - Send Verification Mail
+                        user.sendEmailVerification().addOnCompleteListener{
+                            if(it.isSuccessful){
+                                Toast.makeText(this, "User Registered Successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Check your inbox and verify your email!!", Toast.LENGTH_SHORT).show()
+                            }else{
+                                Log.w("Error", it.exception)
+                                Toast.makeText(this, it.exception!!.localizedMessage, Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }else{
+                        Log.w("Error", profile_update_task.exception)
+                        Toast.makeText(this, profile_update_task.exception!!.localizedMessage, Toast.LENGTH_LONG).show()
+                    }
+                    finish()
+                }
 
-    private fun insertIntoDataBase(uid : String, currUser: HashMap<String, Any>) {
-        database.child("Users").child(uid).setValue(currUser).addOnCompleteListener(this){
-            task ->
-            if(task.isSuccessful){
-                Toast.makeText(this, "User Created Successfully", Toast.LENGTH_LONG).show()
-                startActivity(Intent(this, Dashboard::class.java))
-                finish()
-            }else{
-                Log.w("Error", "SignUpWithEmailDataBaseWrite:Failure", task.exception)
-                Toast.makeText(this, "Authentication Failed", Toast.LENGTH_LONG).show()
+            } else {
+                Log.w("Error", "SignUpWithEmailCreate:Failure", task.exception)
+                Toast.makeText(this, task.exception!!.localizedMessage, Toast.LENGTH_LONG).show()
             }
             sign_up_in_proceed_btn.isEnabled = true
             sign_up_in_proceed_btn.isClickable = true

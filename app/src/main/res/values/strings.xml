@@ -78,4 +78,5 @@
     <string name="print_pdf_icon_description">Print as PDF</string>
     <string name="purchase_amount_dummy_text">₹ 1000</string>
     <string name="row_date_dummy_text">27 Jul 2000</string>
+    <string name="date_menu_title">Pick Date</string>
 </resources>

@@ -2,6 +2,7 @@ package com.sushant.quickbills.activity
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
@@ -16,10 +17,7 @@ import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.ITEMS_FIELD
-import com.sushant.quickbills.data.ITEMS_NAME_FIELD
-import com.sushant.quickbills.data.RecyclerItemsAdapter
-import com.sushant.quickbills.data.SEARCH_KEY
+import com.sushant.quickbills.data.*
 import com.sushant.quickbills.model.Item
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.pop_up_add_item.view.*
@@ -73,6 +71,7 @@ class ItemActivity : AppCompatActivity(), RecyclerItemsAdapter.OnClickListener,
         menuInflater.inflate(R.menu.search_menu, menu)
         val searchItem: MenuItem = menu!!.findItem(R.id.search)
         val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.queryHint = "Type name or price..."
         searchView.setOnQueryTextListener(this)
         return super.onCreateOptionsMenu(menu)
     }
@@ -201,6 +200,7 @@ class ItemActivity : AppCompatActivity(), RecyclerItemsAdapter.OnClickListener,
 
     override fun onQueryTextChange(newText: String?): Boolean {
         val searchString = newText!!.replace(" ", "").lowercase()
+        val isNumeric = searchString.toDoubleOrNull() != null && searchString.isNotEmpty()
         timer?.cancel()
         //Wait for some time after user stops typing, then execute the query:
         timer = object : CountDownTimer(1300, 1000) {
@@ -208,11 +208,18 @@ class ItemActivity : AppCompatActivity(), RecyclerItemsAdapter.OnClickListener,
             }
 
             override fun onFinish() {
-                val newQuery: Query =
+                var newQuery: Query =
                     Firebase.database.reference.child(ITEMS_FIELD).child(auth.currentUser!!.uid)
-                        .orderByChild(SEARCH_KEY)
-                        .startAt(searchString)
-                        .endAt(searchString + "\uf8ff")
+                //Trying to do two types of queries based on input type (by price or item name)
+                newQuery = if(isNumeric){
+                        newQuery.orderByChild(ITEMS_PRICE_FIELD)
+                            .startAt(searchString.toDouble())
+                    }
+                    else{
+                        newQuery.orderByChild(SEARCH_KEY)
+                            .startAt(searchString)
+                            .endAt(searchString + "\uf8ff")
+                    }
                 val newOptions: FirebaseRecyclerOptions<Item> =
                     FirebaseRecyclerOptions.Builder<Item>()
                         .setQuery(newQuery, Item::class.java)

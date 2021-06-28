@@ -75,6 +75,7 @@ class CustomerActivity : AppCompatActivity(), RecyclerCustomersAdapter.OnClickLi
         menuInflater.inflate(R.menu.search_menu, menu)
         val searchItem: MenuItem = menu!!.findItem(R.id.search)
         val searchView: SearchView = searchItem.actionView as SearchView
+        searchView.queryHint = "Type name or number..."
         searchView.setOnQueryTextListener(this)
         return super.onCreateOptionsMenu(menu)
     }
@@ -267,6 +268,7 @@ class CustomerActivity : AppCompatActivity(), RecyclerCustomersAdapter.OnClickLi
     //Searching Functionality Implementation
     override fun onQueryTextChange(newText: String?): Boolean {
         val searchString = newText!!.replace(" ", "").lowercase()
+        val isNumeric = searchString.toDoubleOrNull() != null && searchString.isNotEmpty()
         timer?.cancel()
         //Wait for some time after user stops typing
         timer = object : CountDownTimer(1300, 1000) {
@@ -274,10 +276,18 @@ class CustomerActivity : AppCompatActivity(), RecyclerCustomersAdapter.OnClickLi
             }
 
             override fun onFinish() {
-                val newQuery: Query = Firebase.database.reference
+                var newQuery: Query = Firebase.database.reference
                     .child(CUSTOMERS_FIELD).child(auth.currentUser!!.uid)
-                    .orderByChild(SEARCH_KEY).startAt(searchString)
-                    .endAt(searchString + "\uf8ff")
+                //Trying to do two types of queries based on input type (by customerName or Mobile)
+                newQuery = if (isNumeric) {
+                    newQuery.orderByChild(CUSTOMER_NUMBER_FIED)
+                        .startAt(searchString)
+                        .endAt(searchString + "\uf8ff")
+                } else {
+                    newQuery.orderByChild(SEARCH_KEY).startAt(searchString)
+                        .endAt(searchString + "\uf8ff")
+                }
+
                 val newOptions: FirebaseRecyclerOptions<Customer> =
                     FirebaseRecyclerOptions.Builder<Customer>()
                         .setQuery(newQuery, Customer::class.java)

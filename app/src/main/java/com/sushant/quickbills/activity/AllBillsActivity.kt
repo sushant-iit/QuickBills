@@ -1,10 +1,13 @@
 package com.sushant.quickbills.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,8 +35,8 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
     private val consolidatedList = arrayListOf<ListItem>()
     private val layoutManager = LinearLayoutManager(this)
     private val recyclerBillsAdapter = RecyclerBillsAdapter(this, consolidatedList, this)
+    private val datePickerBuilder = MaterialDatePicker.Builder.dateRangePicker()
     private lateinit var dialog: AlertDialog
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,5 +122,24 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
 
         dialog = AlertDialog.Builder(this).setView(view).create()
         dialog.show()
+    }
+
+    //For displaying date filter
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.allbills_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //For showing date picker and filtering based on data
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.date_selector) {
+            val materialDatePicker = datePickerBuilder.build()
+            materialDatePicker.show(supportFragmentManager, "Choose date range...")
+
+            materialDatePicker.addOnPositiveButtonClickListener {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

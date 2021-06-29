@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         //Reset to window mde from full screen mode in splash screen to main activity
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         //Set up Theme
         mySharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         else
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        setContentView(R.layout.activity_main)
 
         //Setting up the listeners:
         //TODO("Improve Feedback later by getting feedback from login Activity")
@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         sign_up_btn_id.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-
     }
 
     override fun onStart() {

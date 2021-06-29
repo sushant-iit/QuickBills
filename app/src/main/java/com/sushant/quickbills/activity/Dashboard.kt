@@ -1,6 +1,7 @@
 package com.sushant.quickbills.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -35,6 +37,9 @@ class Dashboard : AppCompatActivity() {
     private val customerList = arrayListOf<Customer>()
     private var autoCompleteCustomerAdapter: AutoCompleteCustomerAdapter? = null
     private lateinit var autoCompleteCustomerName : AutoCompleteTextView
+    private lateinit var mySharedPref : SharedPreferences
+    private lateinit var menuItemTheme : MenuItem
+    private lateinit var menuItemLogOut: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,7 @@ class Dashboard : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.pop_up_choose_customer, null, false)
         autoCompleteCustomerName = view.choose_customer_name_pop_up
         customerDialog = AlertDialog.Builder(this).setView(view).create()
+        mySharedPref = getSharedPreferences(PREFS_NAME, 0)
 
         //Set up Adapters:-
         autoCompleteCustomerName.setAdapter(autoCompleteCustomerAdapter)
@@ -181,15 +187,29 @@ class Dashboard : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.dashboard_menu, menu)
+        menuItemTheme = menu!!.findItem(R.id.set_theme)
+        menuItemLogOut = menu.findItem(R.id.log_out)
         return super.onCreateOptionsMenu(menu)
     }
 
     //For Logging the current user out:
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == 0) {
+        if (item.itemId == R.id.log_out) {
             auth.signOut()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }
+        if (item.itemId == R.id.set_theme) {
+            val mySharedPreferencesEditor = mySharedPref.edit()
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                mySharedPreferencesEditor.putInt(NIGHT_MODE_ON, 0)
+            else
+                mySharedPreferencesEditor.putInt(NIGHT_MODE_ON, 1)
+            mySharedPreferencesEditor.apply()
+            //Disable theme clicking now:-
+            menuItemTheme.isEnabled = false
+            menuItemLogOut.isEnabled = false    /* To avoid unexpected crashes */
+            Toast.makeText(this, "Restart the App to see the changes...", Toast.LENGTH_LONG).show()
         }
         return super.onOptionsItemSelected(item)
     }

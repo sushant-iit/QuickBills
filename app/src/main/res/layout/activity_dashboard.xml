@@ -81,7 +81,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/customer_card_id"
-            style="@style/CardView.Dark"
+            app:cardBackgroundColor="@color/surface"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_margin="5sp"

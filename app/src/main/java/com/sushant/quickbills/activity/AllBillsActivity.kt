@@ -15,12 +15,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
-import com.sushant.quickbills.data.BILLS_FIELD
-import com.sushant.quickbills.data.BILLS_TIME_FIELD
+import com.sushant.quickbills.data.*
 import com.sushant.quickbills.data.RecyclerBillsAdapter
 import com.sushant.quickbills.model.Bill
 import com.sushant.quickbills.model.DateItem
 import com.sushant.quickbills.model.ListItem
+import com.sushant.quickbills.utils.ConverterTime
 import com.sushant.quickbills.utils.createOrShowBillPDF
 import kotlinx.android.synthetic.main.activity_all_bills.*
 import kotlinx.android.synthetic.main.pop_up_delete.view.*
@@ -51,9 +51,17 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
     //Retrieve the data from the database and store it in the hashmap according to the parameter
     override fun onStart() {
         super.onStart()
-        val currBillsRef = database.child(BILLS_FIELD).child(auth.currentUser!!.uid).orderByChild(
+        updateAllBillsData(0, 0)
+    }
+
+    private fun updateAllBillsData(startDate: Long, endDate: Long) {
+        var currBillsQuery = database.child(BILLS_FIELD).child(auth.currentUser!!.uid).orderByChild(
             BILLS_TIME_FIELD
         )
+        currBillsQuery = if (startDate != 0L && endDate != 0L) {
+            currBillsQuery.startAt(-endDate.toDouble()).endAt(-startDate.toDouble())
+        } else
+            currBillsQuery
         val billListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 billsAtDate.clear()
@@ -80,7 +88,7 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
             }
 
         }
-        currBillsRef.addValueEventListener(billListener)
+        currBillsQuery.addValueEventListener(billListener)
     }
 
     //Consolidated list is passed to recycler view for rendering
@@ -111,10 +119,9 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
         proceedDelBtn.setOnClickListener {
             database.child(BILLS_FIELD).child(auth.currentUser!!.uid).child(key).removeValue()
                 .addOnCompleteListener { task ->
-                    if (task.isSuccessful){
+                    if (task.isSuccessful) {
                         Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show()
-                    }
-                    else
+                    } else
                         Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show()
                     dialog.dismiss()
                 }
@@ -136,8 +143,13 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
             val materialDatePicker = datePickerBuilder.build()
             materialDatePicker.show(supportFragmentManager, "Choose date range...")
 
-            materialDatePicker.addOnPositiveButtonClickListener {
-
+            materialDatePicker.addOnPositiveButtonClickListener { datePicked ->
+                //Adding offset in endTime (as I want to select bills inclusively in [start Date, end Date]
+                //Adding 24hrs.toMillis() - 1L (a milli second less than 24 hrs like 23:59:59
+                updateAllBillsData(
+                    ConverterTime(datePicked.first).getTimeInGMT(),
+                    ConverterTime(datePicked.second).getTimeInGMT() + 86400000L /* 24hrs */ - 1L /* 1ms */
+                )
             }
         }
         return super.onOptionsItemSelected(item)

@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".activity.SignUpActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activity.MyAccountActivity"></activity>
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.NewBillActivity"
             android:label="New Bill"
@@ -27,7 +30,7 @@
             android:label="Item Prices" />
         <activity
             android:name=".activity.AllBillsActivity"
-            android:label="All Bills"></activity>
+            android:label="All Bills" />
         <activity
             android:name=".activity.Dashboard"
             android:configChanges="orientation|screenSize"
@@ -36,10 +39,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="Quick Bills"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.Launcher">
+            android:theme="@style/Theme.Launcher"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,7 +57,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
 
         <meta-data
             android:name="preloaded_fonts"

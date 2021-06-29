@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#121212</color>
+    <color name="surface">#424242</color>
+    <color name="secondary">#00dec0</color>
+    <color name="foreground">#FFFFFF</color>
+    <color name="text_hint">#CFCFCF</color>
+    <color name="bottom_navigation">#202020</color>
+    <color name="top_notification">#000000</color>
+    <color name="primary">#202020</color>
+</resources>

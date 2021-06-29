@@ -2,6 +2,13 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/set_theme"
+        android:menuCategory="container"
+        android:title="@string/set_theme_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/log_out"
+        android:menuCategory="container"
         android:title="@string/log_out_title"
         app:showAsAction="ifRoom" />
 </menu>

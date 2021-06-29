@@ -1,22 +1,37 @@
 package com.sushant.quickbills.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
+import com.sushant.quickbills.data.NIGHT_MODE_ON
+import com.sushant.quickbills.data.PREFS_NAME
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var mySharedPref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Reset to window mde from full screen mode in splash screen to main activity
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //Set up Theme
+        mySharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        var isDark = 0
+        if(mySharedPref.contains(NIGHT_MODE_ON))
+            isDark = mySharedPref.getInt(NIGHT_MODE_ON, 0)
+        if(isDark==1)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         //Setting up the listeners:
         //TODO("Improve Feedback later by getting feedback from login Activity")

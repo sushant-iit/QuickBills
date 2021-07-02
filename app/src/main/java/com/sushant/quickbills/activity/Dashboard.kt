@@ -68,6 +68,9 @@ class Dashboard : AppCompatActivity() {
         all_bills_card_id.setOnClickListener{
             startActivity(Intent(this, AllBillsActivity::class.java))
         }
+        my_account_card_id.setOnClickListener {
+            startActivity(Intent(this, MyAccountActivity::class.java))
+        }
         new_bill_card_id.setOnClickListener {
             val customerNumber = view.choose_customer_mobile_pop_up
             val selectBtn = view.choose_customer_pop_up_button

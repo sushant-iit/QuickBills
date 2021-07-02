@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/quick_bills_solid_rounded_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
-        <activity android:name=".activity.MyAccountActivity"></activity>
         <activity
             android:name=".activity.SignUpActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -31,6 +30,8 @@
         <activity
             android:name=".activity.AllBillsActivity"
             android:label="All Bills" />
+        <activity android:name=".activity.MyAccountActivity"
+            android:label="My Account"/>
         <activity
             android:name=".activity.Dashboard"
             android:configChanges="orientation|screenSize"

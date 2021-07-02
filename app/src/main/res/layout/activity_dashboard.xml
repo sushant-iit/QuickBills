@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,37 +7,37 @@
     android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".activity.Dashboard"
-        android:background="@color/background">
+        android:layout_marginTop="20dp"
+        android:background="@color/background"
+        tools:context=".activity.Dashboard">
 
         <TextView
             android:id="@+id/welcomeId"
             android:layout_width="0dp"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/mflow"
+            android:layout_margin="10dp"
             android:padding="2dp"
             android:text="@string/welcome_msg"
             android:textColor="@color/foreground"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/mflow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/user_name_id"
             android:layout_width="0dp"
-            android:layout_margin="10dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/mflow"
+            android:layout_margin="10dp"
             android:padding="2dp"
             android:text="@string/user_name_dummy_text"
             android:textColor="@color/foreground"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/mflow"
             app:layout_constraintStart_toEndOf="@+id/welcomeId"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,11 +80,11 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/customer_card_id"
-            app:cardBackgroundColor="@color/surface"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_margin="5sp"
             android:layout_weight="1"
+            app:cardBackgroundColor="@color/surface"
             app:cardCornerRadius="@dimen/card_radius"
             tools:layout_editor_absoluteX="216dp"
             tools:layout_editor_absoluteY="195dp">
@@ -157,7 +156,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/my_account_card_id"
             android:layout_width="0dp"
             android:layout_height="160dp"
             android:layout_margin="5sp"
@@ -278,7 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal"
-            app:constraint_referenced_ids="new_bill_card_id,customer_card_id,item_card_id,all_bills_card_id,cardView,cardView2"
+            app:constraint_referenced_ids="new_bill_card_id,customer_card_id,item_card_id,all_bills_card_id,cardView2,my_account_card_id"
             app:flow_horizontalGap="20dp"
             app:flow_horizontalStyle="packed"
             app:flow_maxElementsWrap="2"

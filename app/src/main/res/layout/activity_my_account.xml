@@ -347,7 +347,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/delete_account_btn"
+                android:id="@+id/delete_data_btn"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="65dp"

@@ -40,6 +40,7 @@ class MyAccountActivity : AppCompatActivity() {
     private lateinit var brandAddressField: TextView
     private val storageRef = Firebase.storage.reference
     private lateinit var progressBar: ProgressBar
+    private var currentProgress: Int = 0
 
     private val cropImageActivityContract = object : ActivityResultContract<Any?, Uri?>() {
         override fun createIntent(context: Context, input: Any?): Intent {
@@ -269,13 +270,52 @@ class MyAccountActivity : AppCompatActivity() {
             reset_password_btn.isEnabled = false
             reset_password_btn.isClickable = false
             reset_password_btn.setBackgroundColor(Color.DKGRAY)
-            auth.sendPasswordResetEmail(auth.currentUser!!.email.toString()).addOnCompleteListener{
-                    sendResetMailTask->
-                if(sendResetMailTask.isSuccessful){
-                    Toast.makeText(this, "Reset Email sent to your email successfully", Toast.LENGTH_LONG).show()
-                }else{
-                    Toast.makeText(this, sendResetMailTask.exception!!.localizedMessage, Toast.LENGTH_LONG).show()
-                    Log.w("Error", sendResetMailTask.exception)
+            auth.sendPasswordResetEmail(auth.currentUser!!.email.toString())
+                .addOnCompleteListener { sendResetMailTask ->
+                    if (sendResetMailTask.isSuccessful) {
+                        Toast.makeText(
+                            this,
+                            "Reset Email sent to your email successfully",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            sendResetMailTask.exception!!.localizedMessage,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.w("Error", sendResetMailTask.exception)
+                    }
+                }
+        }
+        delete_data_btn.setOnClickListener {
+            //UI configurations
+            currentProgress = 0
+            delete_data_btn.isClickable = false
+            delete_data_btn.isEnabled = false
+            delete_data_btn.setBackgroundColor(Color.DKGRAY)
+            progressBar.visibility = View.VISIBLE
+            progressBar.progress = currentProgress
+
+            //Start deleting the data
+            deleteData(ITEMS_FIELD)
+            deleteData(CUSTOMERS_FIELD)
+            deleteData(BILLS_FIELD)
+
+            //Delete User Profile pic (Just Changing the url to "default")
+            database.child(USERS_FIELD).child(auth.currentUser!!.uid).child(LOGO_URL)
+                .setValue("default").addOnCompleteListener { deleteTask ->
+                if (deleteTask.isSuccessful) {
+                    currentProgress += 25
+                    progressBar.progress = currentProgress
+                    Toast.makeText(this, "Removed Picture...", Toast.LENGTH_SHORT).show()
+                    if (currentProgress == 100)
+                        progressBar.visibility = View.GONE
+                } else {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(this, deleteTask.exception!!.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                    Log.w("DeleteAllData", deleteTask.exception)
                 }
             }
         }
@@ -292,6 +332,8 @@ class MyAccountActivity : AppCompatActivity() {
                 if (currUser.logoUrl != "default")
                     Picasso.get().load(currUser.logoUrl).noPlaceholder()
                         .into(profile_image)
+                else
+                    profile_image.setImageResource(R.mipmap.sample_logo)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -303,5 +345,23 @@ class MyAccountActivity : AppCompatActivity() {
         super.onStart()
     }
 
+    //Delete the account data from database function
+    private fun deleteData(field: String) {
+        database.child(field).child(auth.currentUser!!.uid).removeValue()
+            .addOnCompleteListener { deleteTask ->
+                if (deleteTask.isSuccessful) {
+                    currentProgress += 25
+                    progressBar.progress = currentProgress
+                    Toast.makeText(this, "Deleted $field...", Toast.LENGTH_SHORT).show()
+                    if (currentProgress == 100)
+                        progressBar.visibility = View.GONE
+                } else {
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(this, deleteTask.exception!!.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                    Log.w("DeleteAllData", deleteTask.exception)
+                }
+            }
+    }
 
 }

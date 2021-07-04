@@ -48,6 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        Crop Image Activity Downloaded from internet (library)-->
+        <activity android:name="com.canhub.cropper.CropImageActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

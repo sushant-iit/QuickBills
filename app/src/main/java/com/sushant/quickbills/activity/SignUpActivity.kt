@@ -12,6 +12,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
+import com.sushant.quickbills.data.USERS_FIELD
+import com.sushant.quickbills.model.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
@@ -86,6 +88,9 @@ class SignUpActivity : AppCompatActivity() {
                         //For preventing garbage users - Send Verification Mail
                         user.sendEmailVerification().addOnCompleteListener{
                             if(it.isSuccessful){
+                                //Set default values to the database
+                                    val newUser = User()
+                                database.child(USERS_FIELD).child(auth.currentUser!!.uid).setValue(newUser)
                                 Toast.makeText(this, "User Registered Successfully", Toast.LENGTH_SHORT).show()
                                 Toast.makeText(this, "Check your inbox and verify your email!!", Toast.LENGTH_SHORT).show()
                             }else{

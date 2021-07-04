@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                         auth.sendPasswordResetEmail(enteredEmail.toString()).addOnCompleteListener{
                             sendResetMailTask->
                             if(sendResetMailTask.isSuccessful){
-                                Toast.makeText(this, "Reset Email sent to your email successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Reset Email sent to your email successfully", Toast.LENGTH_LONG).show()
                                 dialog.dismiss()
                             }else{
                                 Toast.makeText(this, sendResetMailTask.exception!!.localizedMessage, Toast.LENGTH_LONG).show()

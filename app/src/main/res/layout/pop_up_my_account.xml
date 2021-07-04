@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_without_radius">
+
+            <ImageView
+                android:id="@+id/account_pop_up_icon"
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:contentDescription="@string/icon_account"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_baseline_edit_24" />
+
+            <EditText
+                android:id="@+id/account_pop_up_entered_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/account_pop_up_icon"
+                android:autofillHints="no"
+                android:backgroundTint="@color/secondary"
+                android:ems="10"
+                android:textColor="@color/foreground"
+                android:textColorHint="@color/text_hint"
+                android:inputType="text"
+                android:hint="@string/default_hint"/>
+
+            <Button
+                android:id="@+id/account_pop_up_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/account_pop_up_entered_text"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/account_pop_up_icon"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/account_btn_default_hint"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

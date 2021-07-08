@@ -8,4 +8,5 @@
     <color name="bottom_navigation">#FFFFFF</color>
     <color name="top_notification">#014245</color>
     <color name="primary">#006064</color>
+    <color name="progressBar">#4DB6AC</color>
 </resources>

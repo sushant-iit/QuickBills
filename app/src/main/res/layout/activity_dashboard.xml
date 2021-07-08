@@ -9,7 +9,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:background="@color/background"
         tools:context=".activity.Dashboard">
 
@@ -17,21 +16,27 @@
             android:id="@+id/welcomeId"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="2dp"
             android:text="@string/welcome_msg"
             android:textColor="@color/foreground"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/mflow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/user_name_id"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:padding="2dp"
             android:text="@string/user_name_dummy_text"
             android:textColor="@color/foreground"
@@ -39,6 +44,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/mflow"
             app:layout_constraintStart_toEndOf="@+id/welcomeId"
+            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
@@ -123,6 +129,7 @@
             android:layout_margin="5sp"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/surface"
+            android:visibility="gone"
             app:cardCornerRadius="@dimen/card_radius"
             app:cardElevation="2dp"
             tools:layout_editor_absoluteX="216dp"

@@ -3,6 +3,7 @@ package com.sushant.quickbills.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sushant.quickbills.R
 import com.sushant.quickbills.data.*
-import com.sushant.quickbills.data.RecyclerBillsAdapter
 import com.sushant.quickbills.model.Bill
 import com.sushant.quickbills.model.DateItem
 import com.sushant.quickbills.model.ListItem
@@ -24,6 +24,8 @@ import com.sushant.quickbills.utils.ConverterTime
 import com.sushant.quickbills.utils.createOrShowBillPDF
 import kotlinx.android.synthetic.main.activity_all_bills.*
 import kotlinx.android.synthetic.main.pop_up_delete.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.DateFormat
 import java.util.*
 import kotlin.collections.LinkedHashMap
@@ -104,7 +106,11 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
     }
 
     override fun printPDF(bill: Bill) {
-        createOrShowBillPDF(this, bill)
+        allBillsProgressIndicator.visibility = View.VISIBLE
+        GlobalScope.launch {
+            createOrShowBillPDF(this@AllBillsActivity, bill).join()
+            runOnUiThread { allBillsProgressIndicator.visibility = View.GONE }
+        }
     }
 
     override fun deleteBill(key: String) {
@@ -117,13 +123,13 @@ class AllBillsActivity : AppCompatActivity(), RecyclerBillsAdapter.OnClickListen
         }
 
         proceedDelBtn.setOnClickListener {
+            dialog.dismiss()
             database.child(BILLS_FIELD).child(auth.currentUser!!.uid).child(key).removeValue()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Deleted Successfully", Toast.LENGTH_SHORT).show()
                     } else
                         Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
                 }
         }
 

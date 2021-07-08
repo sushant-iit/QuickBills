@@ -1,7 +1,12 @@
 <resources>
+
     <style name="Theme.App" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/top_notification</item>
         <item name="android:navigationBarColor">@color/bottom_navigation</item>
+    </style>
+
+    <style name="Widget.App.LinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="trackColor">@color/progressBar</item>
     </style>
 </resources>

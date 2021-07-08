@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -23,10 +24,13 @@ import com.sushant.quickbills.model.Customer
 import com.sushant.quickbills.model.Item
 import com.sushant.quickbills.utils.createOrShowBillPDF
 import com.sushant.quickbills.utils.isNetworkAvailable
+import kotlinx.android.synthetic.main.activity_all_bills.*
 import kotlinx.android.synthetic.main.activity_new_bill.*
 import kotlinx.android.synthetic.main.pop_up_delete.view.*
 import kotlinx.android.synthetic.main.pop_up_exit_confirm.view.*
 import kotlinx.android.synthetic.main.pop_up_new_particular.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 @Suppress("LABEL_NAME_CLASH")
@@ -241,14 +245,21 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
                 particularList,
                 totalAmount
             )
+            item.isVisible = false
             database.child(BILLS_FIELD).child(auth.currentUser!!.uid).push()
                 .setValue(newBill).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "Bill created successfully...", Toast.LENGTH_LONG)
                             .show()
                         //Create the pdf of generated bill
-                        createOrShowBillPDF(this, newBill)
-                        finish()
+                        //UI enhancements
+                        updateNewBillUI()
+                        GlobalScope.launch {
+                            createOrShowBillPDF(this@NewBillActivity, newBill).join()
+                            runOnUiThread {
+                                finish()
+                            }
+                        }
                     } else {
                         Toast.makeText(this, "Failure: Bill Creation", Toast.LENGTH_LONG).show()
                     }
@@ -266,6 +277,14 @@ class NewBillActivity : AppCompatActivity(), RecyclerParticularsAdapter.OnClickL
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateNewBillUI() {
+        newBillProgressIndicator.visibility = View.VISIBLE
+        customerDetailsCard.visibility = View.GONE
+        bill_heading_card.visibility = View.GONE
+        particularsRecyclerView.visibility = View.GONE
+        addNewParticularBtn.visibility = View.GONE
     }
 
     //Checking once for confirmation before exit so that user doesn't accidentally lose the data:

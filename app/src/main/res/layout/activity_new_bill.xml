@@ -8,13 +8,29 @@
     android:background="@color/background"
     tools:context=".activity.NewBillActivity">
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/newBillProgressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:trackThickness="35dp"
+        app:indicatorSize="100dp"
+        app:trackColor="@color/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
     <androidx.cardview.widget.CardView
-        app:cardBackgroundColor="@color/surface"
+        android:id="@+id/customerDetailsCard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:cardBackgroundColor="@color/surface"
         app:layout_constraintBottom_toTopOf="@+id/bill_heading_card"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="1dp" >
+        tools:layout_editor_absoluteX="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,8 +41,8 @@
                 style="@style/TextAppearance.Compat.Notification.Info.Media"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_above="@id/customer_mobile_view_id"
+                android:layout_marginStart="20dp"
                 android:text="@string/autcomplete_name_dummy_text"
                 android:textColor="@color/foreground"
                 android:textSize="24sp"

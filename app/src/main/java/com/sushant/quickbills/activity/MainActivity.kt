@@ -5,6 +5,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.firebase.FirebaseApp
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -21,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         //Reset to window mde from full screen mode in splash screen to main activity
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
+
+        //Set up security
+        FirebaseApp.initializeApp(/*context=*/ this)
+        val firebaseAppCheck = FirebaseAppCheck.getInstance()
+        firebaseAppCheck.installAppCheckProviderFactory(
+            SafetyNetAppCheckProviderFactory.getInstance())
 
         //Set up Theme
         mySharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)

@@ -8,4 +8,5 @@
     <color name="bottom_navigation">#202020</color>
     <color name="top_notification">#000000</color>
     <color name="primary">#202020</color>
+    <color name="progressBar">#00dec0</color>
 </resources>

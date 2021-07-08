@@ -1,7 +1,5 @@
 package com.sushant.quickbills.data
 
-const val USER_NAME_FIELD = "name"
-const val USER_EMAIL_ID_FIELD = "e-mail"
 const val CUSTOMERS_FIELD = "Customers"
 const val CUSTOMERS_NAME_FIELD = "name"
 const val CUSTOMER_NUMBER_FIED = "number"
@@ -19,3 +17,4 @@ const val BRAND_NAME_FIELD = "brandName"
 const val BRAND_NUMBER_FIELD = "brandNumber"
 const val BRAND_ADDRESS_FIELD = "brandAddress"
 const val LOGO_URL = "logoUrl"
+const val MAX_IMAGE_DOWNLOAD_SIZE = 1024*1024L

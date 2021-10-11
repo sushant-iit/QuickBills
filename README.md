@@ -45,6 +45,23 @@ This is an Android Kotlin Application which allows local shopkeepers to maintain
 	<img src = "https://github.com/sushant-iit/QuickBills/blob/master/markdown_resources/MyAccountActivity.jpeg" width = "200" height = "400" alt="MyAccountActivity"/>
 	<img src = "https://github.com/sushant-iit/QuickBills/blob/master/markdown_resources/AllBillsActivity.jpg" width = "200" height = "400" alt="All Bills"/>
 
+## Setting up the project locally
+
+This project uses [Kotlin](https://kotlinlang.org/) as language and [Firebase](https://firebase.google.com/) as backend support for authentication and database.
+To set up the project locally, it is advisable to install and configure [Android Studio](https://developer.android.com/studio).
+
+To set up the project locally, follow these steps:
+
+1. Fork this repository.
+2. Clone your fork to local system using <br>
+   `git clone https://github.com/YOUR_GITHUB_HANDLE/QuickBills`
+3. Open the Android Studio and click on open project.
+4. Navigate to this project and click on 'QuickBills' directory (it will be shown with Android default icon).
+5. Wait for gradle to build and set up dependencies.
+6. To start contributing, create a new branch using: <br>
+   `git checkout -b my-new-branch`
+
+
 ## Developer Contact
 [Email](mailto:krsushant.sk@gmail.com "Email")
 [LinkedIn](https://www.linkedin.com/in/sushantiit/ "LinkedIn")

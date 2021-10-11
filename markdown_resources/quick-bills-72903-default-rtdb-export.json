@@ -1,0 +1,109 @@
+{
+  "Bills" : {
+    "6ObeAK8ZDAVPC4MXVuCBNaiDYFF3" : {
+      "-MljpTryrFV51qlU0K5y" : {
+        "customerDetails" : {
+          "address" : "New York",
+          "name" : "Shiksha",
+          "number" : "123456789",
+          "searchKey" : "shiksha"
+        },
+        "particulars" : [ {
+          "itemAmount" : 180,
+          "itemName" : "Calcium",
+          "itemPrice" : 15,
+          "itemQty" : 12
+        } ],
+        "purchasedAt" : -1633963863105,
+        "totalAmount" : 180,
+        "type" : 1,
+        "typeBill" : 1,
+        "typeDate" : 0
+      }
+    },
+    "U6aTPj3n4lfJELzJVZuQcg8hbyn2" : {
+      "-Mljo4DVp1HJeLLHlOrW" : {
+        "customerDetails" : {
+          "address" : "gwhsh",
+          "name" : "Sushant Kumar",
+          "number" : "9438591471",
+          "searchKey" : "sushantkumar"
+        },
+        "particulars" : [ {
+          "itemAmount" : 1000,
+          "itemName" : "Cashew",
+          "itemPrice" : 500,
+          "itemQty" : 2
+        }, {
+          "itemAmount" : 1090,
+          "itemName" : "Kishmish",
+          "itemPrice" : 545,
+          "itemQty" : 2
+        } ],
+        "purchasedAt" : -1633963495951,
+        "totalAmount" : 2090,
+        "type" : 1,
+        "typeBill" : 1,
+        "typeDate" : 0
+      }
+    }
+  },
+  "Customers" : {
+    "6ObeAK8ZDAVPC4MXVuCBNaiDYFF3" : {
+      "-MljpN20nO467fl-1Oio" : {
+        "address" : "New York",
+        "name" : "Shiksha",
+        "number" : "123456789",
+        "searchKey" : "shiksha"
+      }
+    },
+    "U6aTPj3n4lfJELzJVZuQcg8hbyn2" : {
+      "-Mljnu1xIGIaFYA7Z_GG" : {
+        "address" : "gwhsh",
+        "name" : "Sushant Kumar",
+        "number" : "9438591471",
+        "searchKey" : "sushantkumar"
+      }
+    }
+  },
+  "Items" : {
+    "6ObeAK8ZDAVPC4MXVuCBNaiDYFF3" : {
+      "-MljpHFwcOlp984jZOn0" : {
+        "name" : "Calcium",
+        "price" : 15,
+        "searchKey" : "calcium"
+      }
+    },
+    "U6aTPj3n4lfJELzJVZuQcg8hbyn2" : {
+      "-MljnwyNs1n-j7d7G_kc" : {
+        "name" : "Cashew",
+        "price" : 500,
+        "searchKey" : "cashew"
+      },
+      "-MljnzTAQclKmIOu6_Fd" : {
+        "name" : "Kishmish",
+        "price" : 545,
+        "searchKey" : "kishmish"
+      },
+      "-Mljo-jt6up4hB4nW21J" : {
+        "name" : "Laddo",
+        "price" : 12,
+        "searchKey" : "laddo"
+      }
+    }
+  },
+  "Users" : {
+    "6ObeAK8ZDAVPC4MXVuCBNaiDYFF3" : {
+      "brandAddress" : "Rameshwaram",
+      "brandName" : "Micronesia",
+      "brandNumber" : "9876543210",
+      "logoUrl" : "default"
+    },
+    "U6aTPj3n4lfJELzJVZuQcg8hbyn2" : {
+      "brandAddress" : "MBI",
+      "brandName" : "IIT BBS",
+      "brandNumber" : "9876543210",
+      "logoUrl" : "default"
+    }
+  }
+}

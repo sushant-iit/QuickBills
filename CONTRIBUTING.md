@@ -13,4 +13,4 @@ To contribute to the respository:
 10.  Incase you have to use database to implement a feature, first understand the structure of the database using [this](https://github.com/sushant-iit/QuickBills/blob/master/markdown_resources/quick-bills-72903-default-rtdb-export.json) dummy data.
 8. Also, reference the issue# that you solved.
 
-Feel free to contact me on discord or my email [Sushant Kumar](sk91@iitbbs.ac.in).
+Feel free to contact me on discord or my [email](mailto:krsushant.sk@gmail.com "Email").
